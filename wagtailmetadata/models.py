@@ -17,7 +17,7 @@ class SiteMetadataPreferences(models.Model):
 
 class MetadataPageMixin(models.Model):
     page_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL)
-    page_description = models.TextField()
+    page_description = models.TextField(blank=True)
 
     promote_panels = Page.promote_panels + [
         MultiFieldPanel([
