@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Install wagtail-linkchecker using setuptools
+Install wagtail-metadata using setuptools
 """
 
 with open('README.rst', 'r') as f:
