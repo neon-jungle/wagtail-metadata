@@ -1,5 +1,18 @@
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Parade of Fans for Houston’s Funeral">
-<meta name="twitter:description" content="{{instance.}}">
-<meta name="twitter:image" content="http://graphics8.nytimes.com/images/2012/02/19/us/19whitney-span/19whitney-span-articleLarge.jpg">
-# TODO
+{% load wagtailmetadata_tags %}
+{% load wagtailimages_tags %}
+{% tot instance.page_image instance.site_image as image %}
+
+<meta name="twitter:card" content="{% tot instance.page_description instance.site_description %}">
+<meta name="twitter:title" content="{{page.title}}">
+<meta name="twitter:description" content="{% tot instance.page_description instance.site_description %}">
+<meta name="twitter:image" content="{% image image original %}">
+
+<meta property="og:url" content="{{page.full_url}}" />
+<meta property="og:title" content="{{page.title}}" />
+<meta property="og:description" content="{% tot instance.page_description instance.site_description %}" />
+<meta property="og:site_name" content="{{site_name}}" />
+<meta property="og:image" content="{{image}}" />
+
+<div itemscope itemtype ="http://schema.org/WebPage"> # TODO Make interchangable
+	
+</div>
