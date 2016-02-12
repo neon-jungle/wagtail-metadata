@@ -1,18 +1,29 @@
 {% load wagtailmetadata_tags %}
 {% load wagtailimages_tags %}
-{% tot instance.page_image instance.site_image as image %}
 
-<meta name="twitter:card" content="{% tot instance.page_description instance.site_description %}">
+{% image instance.meta_image original as meta_image %}
+<style>
+.metadata--hidden {
+	display: none;
+}
+</style>
+
+<meta name="twitter:card" content="{{instance.meta_description}}">
 <meta name="twitter:title" content="{{page.title}}">
-<meta name="twitter:description" content="{% tot instance.page_description instance.site_description %}">
-<meta name="twitter:image" content="{% image image original %}">
+<meta name="twitter:description" content="{{instance.meta_description}}">
+<meta name="twitter:image" content="{{meta_image.url}}">
 
 <meta property="og:url" content="{{page.full_url}}" />
 <meta property="og:title" content="{{page.title}}" />
 <meta property="og:description" content="{% tot instance.page_description instance.site_description %}" />
 <meta property="og:site_name" content="{{site_name}}" />
-<meta property="og:image" content="{{image}}" />
+<meta property="og:image" content="{{image.url}}" />
 
-<div itemscope itemtype ="http://schema.org/WebPage"> # TODO Make interchangable
-	
+<div class='metadata--hidden' itemscope itemtype ="https://schema.org/Thing"> {# TODO Make interchangable #}
+	<span itemprop='url'>{{page.full_url}}</span>
+	<span itemprop='description'>{% tot instance.page_description instance.site_description %}</span>
+	<span itemprop='image'>{{image}}</span>
 </div>
+
+<meta name="author" content="{{site_name}}">
+<meta name="description" content="{% tot instance.page_description instance.site_description %}">

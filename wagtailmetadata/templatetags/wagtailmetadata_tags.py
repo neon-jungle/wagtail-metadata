@@ -13,11 +13,14 @@ def meta_tags(context):
     instance = context['self']
     request = context['request']
     site = Site.find_for_request(request)
-    if not instance.page_image and not instance.page_description:
-        try:
-            instance = SiteMetadataPreferences.objects.get(site=site)
-        except SiteMetadataPreferences.DoesNotExist:
-            return format_html('<!-- Please define your global metadata settings -->')
+    try:
+        global_settings = SiteMetadataPreferences.objects.get(site=site)
+    except SiteMetadataPreferences.DoesNotExist:
+        return format_html('<!-- Please define your global metadata settings -->')
+
+    instance.meta_image = instance.page_image or global_settings.site_image
+    instance.meta_description = instance.page_description or global_settings.site_description
+
     return render_to_string('wagtailmetadata/parts/tags.html', {
         'instance': instance,
         'page': context['self'],
