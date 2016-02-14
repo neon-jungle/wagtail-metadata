@@ -12,6 +12,7 @@ register = template.Library()
 def meta_tags(context):
     instance = context['self']
     request = context['request']
+    page = context['self']
     site = Site.find_for_request(request)
     try:
         global_settings = SiteMetadataPreferences.objects.get(site=site)
@@ -21,9 +22,13 @@ def meta_tags(context):
     instance.meta_image = instance.page_image or global_settings.site_image
     instance.meta_description = instance.page_description or global_settings.site_description
 
+    instance.meta_image = instance.meta_image.get_rendition(filter='original')
+    instance.meta_image.full_url = request.build_absolute_uri(instance.meta_image.url)
+
+    page.absolute_url = request.build_absolute_uri(page.url)
     return render_to_string('wagtailmetadata/parts/tags.html', {
         'instance': instance,
-        'page': context['self'],
+        'page': page,
         'site_name': settings.WAGTAIL_SITE_NAME
     })
 
