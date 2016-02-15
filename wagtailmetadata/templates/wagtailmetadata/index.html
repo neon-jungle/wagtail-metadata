@@ -5,17 +5,34 @@
 {% block bodyclass %}menu-metadata{% endblock %}
 
 {% block content %}
-    {% include "wagtailadmin/shared/header.html" with title="Meta Data" icon="pick" %}
-
-    <div class="nice-padding">
-		<form method="POST" action=''>
-			{% csrf_token %}
-			{{edit_handler.render_form_content}}
-            <input type="submit" value="{% trans 'Save' %}" class="button" />
-		</form>
+<header class="merged tab-merged nice-padding">
+    <div class="row row-flush">
+        <div class="left col9">
+            <h1 class="icon icon-pick">{% blocktrans %}Metadata <span>{{ title }}</span>{% endblocktrans %}</h1>
+        </div>
     </div>
+</header>
+    <form method="POST" action=''>
+    {% csrf_token %}
+    {{edit_handler.render_form_content}}
+    <footer>
+                <ul>
+                    <li class="actions">
+                        <div class="dropdown dropup dropdown-button match-width">
+                            <button type="submit" class="action-save button-longrunning" tabindex="3" data-clicked-text="{% trans 'Updating...' %}"><span class="icon icon-spinner"></span><em>{% trans 'Update settings' %}</em></button>
+
+                        </div>
+                    </li>
+
+                </ul>
+            </footer>
+		</form>
 {% endblock %}
 
 {% block extra_js %}
     {% include "wagtailadmin/pages/_editor_js.html" %}
+{% endblock %}
+
+{% block extra_css %}
+    {% include "wagtailadmin/pages/_editor_css.html" %}
 {% endblock %}

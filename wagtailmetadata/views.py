@@ -1,17 +1,27 @@
 from django.shortcuts import redirect, render
 from django.utils.lru_cache import lru_cache
+from django.utils.translation import ugettext_lazy
 from wagtail.wagtailadmin import messages
-from wagtail.wagtailadmin.edit_handlers import (ObjectList,
-                                                extract_panel_definitions_from_model_class)
+from wagtail.wagtailadmin.edit_handlers import ObjectList, TabbedInterface
 from wagtail.wagtailcore.models import Site
 
 from .models import SiteMetadataPreferences
 
 
 @lru_cache()
-def get_edit_handler(model):
-    panels = extract_panel_definitions_from_model_class(model, ['site'])
-    return ObjectList(panels).bind_to_model(model)
+def get_edit_handler(cls):
+    if hasattr(cls, 'edit_handler'):
+        return cls.edit_handler.bind_to_model(cls)
+
+    # construct a TabbedInterface made up of content_panels, promote_panels
+    # and settings_panels, skipping any which are empty
+    tabs = []
+
+    tabs.append(ObjectList(cls.general_panels, heading=ugettext_lazy('General')))
+    tabs.append(ObjectList(cls.twitter_panels, heading=ugettext_lazy('Twitter'), classname="settings"))
+
+    EditHandler = TabbedInterface(tabs)
+    return EditHandler.bind_to_model(cls)
 
 
 def index(request):

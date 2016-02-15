@@ -19,8 +19,8 @@ def meta_tags(context):
     except SiteMetadataPreferences.DoesNotExist:
         return format_html('<!-- Please define your global metadata settings -->')
 
-    instance.meta_image = instance.page_image or global_settings.site_image
-    instance.meta_description = instance.page_description or global_settings.site_description
+    instance.meta_image = instance.search_image or global_settings.site_image
+    instance.meta_description = instance.search_description or global_settings.site_description
 
     instance.meta_image = instance.meta_image.get_rendition(filter='original')
     instance.meta_image.full_url = request.build_absolute_uri(instance.meta_image.url)
@@ -29,7 +29,8 @@ def meta_tags(context):
     return render_to_string('wagtailmetadata/parts/tags.html', {
         'instance': instance,
         'page': page,
-        'site_name': settings.WAGTAIL_SITE_NAME
+        'site_name': settings.WAGTAIL_SITE_NAME,
+        'global_settings': global_settings,
     })
 
 
