@@ -13,8 +13,6 @@ def get_edit_handler(cls):
     if hasattr(cls, 'edit_handler'):
         return cls.edit_handler.bind_to_model(cls)
 
-    # construct a TabbedInterface made up of content_panels, promote_panels
-    # and settings_panels, skipping any which are empty
     tabs = []
 
     tabs.append(ObjectList(cls.general_panels, heading=ugettext_lazy('General')))

@@ -1,7 +1,8 @@
+import warnings
+
 from django import template
 from django.conf import settings
 from django.template.loader import render_to_string
-from django.utils.html import format_html
 from wagtail.wagtailcore.models import Site
 from wagtailmetadata.models import SiteMetadataPreferences
 
@@ -17,7 +18,8 @@ def meta_tags(context):
     try:
         global_settings = SiteMetadataPreferences.objects.get(site=site)
     except SiteMetadataPreferences.DoesNotExist:
-        return format_html('<!-- Please define your global metadata settings -->')
+        warnings.warn('Your global metadata settings are not defined for {0}'.format(site))
+        return ''
 
     instance.meta_image = instance.search_image or global_settings.site_image
     instance.meta_description = instance.search_description or global_settings.site_description
@@ -32,19 +34,3 @@ def meta_tags(context):
         'site_name': settings.WAGTAIL_SITE_NAME,
         'global_settings': global_settings,
     })
-
-
-@register.simple_tag()
-def tot(first, second):
-    """
-    This or that, here shortened to 'tot'
-    will display a variable if it exists,
-    and if it doesn't, will display the second
-    variable passed through, and finally, none.
-    """
-    if first:
-        return first
-    elif second:
-        return second
-    else:
-        return None
