@@ -6,12 +6,7 @@ Install wagtail-metadata using setuptools
 with open('README.rst', 'r') as f:
     readme = f.read()
 
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from ez_setup import use_setuptools
-    use_setuptools()
-    from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name='wagtail-metadata',
@@ -24,7 +19,6 @@ setup(
 
     install_requires=[
         'wagtail>=1.0',
-        'requests>=2.9.1',
     ],
     zip_safe=False,
     license='BSD License',
