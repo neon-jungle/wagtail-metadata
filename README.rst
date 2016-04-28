@@ -17,7 +17,7 @@ It works with Wagtail 1.0 and upwards.
 Using
 =====
 
-This module will add a link in your settings panel labeled 'Meta Data'. From there you will be able to set site wide preferences that all pages will default to. To have per page meta descriptions and images, you'll need to inherit from ``wagtailmetadata.models.MetadataPageMixin``. This will add one extra field to your promote tab. The field 'Search description' will be your meta description, and 'Search image' will be your meta image.
+This module will add a link in your settings panel labeled 'Metadata'. From there you will be able to set site wide preferences that all pages will default to. To have per page meta descriptions and images, you'll need to inherit from ``wagtailmetadata.models.MetadataPageMixin``. This will add one extra field to your promote tab. The field 'Search description' will be your meta description, and 'Search image' will be your meta image.
 
 Display
 =======
