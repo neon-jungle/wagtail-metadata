@@ -1,0 +1,17 @@
+Changelog
+=========
+
+0.1.3
+~~~~~
+ * Fix: Added missing migrations
+ * Fix: Updated save button on edit page to have correct styles for latest wagtail
+ * Fix: Fixed an error raised when no default image has been set
+
+0.1.2
+~~~~~
+ * Improvement: Added help text to fields
+ * Improvement: Made documentation more clear
+
+0.1.1
+~~~~~
+ * Initial release
