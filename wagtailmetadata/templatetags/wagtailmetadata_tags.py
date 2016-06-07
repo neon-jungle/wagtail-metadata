@@ -24,8 +24,9 @@ def meta_tags(context):
     instance.meta_image = instance.search_image or global_settings.site_image
     instance.meta_description = instance.search_description or global_settings.site_description
 
-    instance.meta_image = instance.meta_image.get_rendition(filter='original')
-    instance.meta_image.full_url = request.build_absolute_uri(instance.meta_image.url)
+    if instance.meta_image:
+        instance.meta_image = instance.meta_image.get_rendition(filter='original')
+        instance.meta_image.full_url = request.build_absolute_uri(instance.meta_image.url)
 
     page.absolute_url = request.build_absolute_uri(page.url)
     return render_to_string('wagtailmetadata/parts/tags.html', {
