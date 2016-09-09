@@ -16,6 +16,7 @@ class SiteMetadataPreferences(models.Model):
         'wagtailimages.Image',
         null=True,
         blank=True,
+        related_name='+',
         on_delete=models.SET_NULL,
         help_text="""
         This is the default image that will be shown when your page is
@@ -42,7 +43,13 @@ class SiteMetadataPreferences(models.Model):
 
 
 class MetadataPageMixin(models.Model):
-    search_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL)
+    search_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        related_name='+',
+        on_delete=models.SET_NULL
+    )
 
     promote_panels = [
         MultiFieldPanel([
