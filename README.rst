@@ -26,8 +26,9 @@ Ensure you put ``MetadataPageMixin`` before ``Page``, for example.
     from wagtail.wagtailcore.models import Page
     from wagtailmetadata.models import MetadataPageMixin
 
-    class ContentPage(MetadataPageMixin, Page):
-        pass
+    class ContentPage(Page, MetadataPageMixin):
+    
+        promote_panels = MetadataPageMixin.promote_panels
 
 Display
 =======
