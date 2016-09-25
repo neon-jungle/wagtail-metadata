@@ -46,7 +46,7 @@ class SiteMetadataPreferences(models.Model):
 
 class MetadataPageMixin(models.Model):
     search_image = models.ForeignKey(
-        'wagtailimages.Image',
+        IMAGE_MODEL,
         null=True,
         blank=True,
         related_name='+',
