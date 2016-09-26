@@ -3,18 +3,24 @@ from django.forms.utils import flatatt
 from django.template import engines
 from django.test import RequestFactory, TestCase
 from django.utils.html import format_html
-from tests.app.models import TestPage
 from wagtail.wagtailcore.models import Site
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.tests.utils import get_test_image_file
+
+from tests.app.models import TestPage
 from wagtailmetadata.models import SiteMetadataPreferences
+from wagtailmetadata.tags import get_meta_image_url
 
 
 class TemplateCase(object):
 
     def setUp(self):
-        self.factory = RequestFactory()
         self.site = Site.objects.first()
+
+        self.factory = RequestFactory()
+        self.request = self.factory.get('/test/')
+        self.request.site = self.site
+
         self.image = Image.objects.create(title='Test Image', file=get_test_image_file())
         self.settings = SiteMetadataPreferences.objects.create(
             site=self.site,
@@ -30,11 +36,7 @@ class TemplateCase(object):
 
         # Add a request to the template, to simulate a RequestContext
         if request_context:
-            site = Site.objects.get(is_default_site=True)
-
-            request = self.factory.get('/test/')
-            request.site = site
-            context['request'] = request
+            context['request'] = self.request
 
         template = self.engine.from_string(string)
         return template.render(context)
@@ -51,10 +53,11 @@ class TemplateCase(object):
             'name': 'twitter:title', 'content': self.page.title
         }), out)
         self.assertInHTML(self.meta({
-            'name': 'twitter:description', 'content': self.page.meta_description
+            'name': 'twitter:description', 'content': self.settings.site_description,
         }), out)
         self.assertInHTML(self.meta({
-            'name': 'twitter:image', 'content': self.page.meta_image.full_url
+            'name': 'twitter:image',
+            'content': get_meta_image_url(self.request, self.settings.site_image),
         }), out)
 
     def test_og_render(self):
@@ -66,13 +69,14 @@ class TemplateCase(object):
             'property': 'og:title', 'content': self.page.title
         }), out)
         self.assertInHTML(self.meta({
-            'property': 'og:description', 'content': self.page.meta_description
+            'property': 'og:description', 'content': self.settings.site_description,
         }), out)
         self.assertInHTML(self.meta({
             'property': 'og:site_name', 'content': settings.WAGTAIL_SITE_NAME
         }), out)
         self.assertInHTML(self.meta({
-            'property': 'og:image', 'content': self.page.meta_image.full_url
+            'property': 'og:image',
+            'content': get_meta_image_url(self.request, self.settings.site_image),
         }), out)
 
     def test_misc_render(self):
