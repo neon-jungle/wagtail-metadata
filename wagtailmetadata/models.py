@@ -3,17 +3,19 @@ from django.utils.translation import ugettext_lazy
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailcore.models import Page, Site
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailimages.models import get_image_model
 
 TWITTER_CARD_TYPES = [
     ('summary', 'Summary card'),
     ('summary_large_image', 'Summary card with large image'),
 ]
 
+IMAGE_MODEL = get_image_model()
 
 class SiteMetadataPreferences(models.Model):
     site = models.OneToOneField(Site, unique=True, db_index=True, editable=False)
     site_image = models.ForeignKey(
-        'wagtailimages.Image',
+        IMAGE_MODEL,
         null=True,
         blank=True,
         related_name='+',
@@ -44,7 +46,7 @@ class SiteMetadataPreferences(models.Model):
 
 class MetadataPageMixin(models.Model):
     search_image = models.ForeignKey(
-        'wagtailimages.Image',
+        IMAGE_MODEL,
         null=True,
         blank=True,
         related_name='+',
