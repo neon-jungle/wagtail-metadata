@@ -88,16 +88,70 @@ class TemplateCase(object):
             'itemprop': 'name', 'content': self.page.title
         }), out)
         self.assertInHTML(self.meta({
-            'itemprop': 'description', 'content': self.page.meta_description
+            'itemprop': 'description', 'content': self.settings.site_description,
         }), out)
         self.assertInHTML(self.meta({
-            'itemprop': 'image', 'content': self.page.meta_image.full_url
+            'itemprop': 'image',
+            'content': get_meta_image_url(self.request, self.settings.site_image),
         }), out)
 
     def test_generic_render(self):
         out = self.render_meta()
         self.assertInHTML(self.meta({
-            'name': 'description', 'content': self.page.meta_description
+            'name': 'description', 'content': self.settings.site_description,
+        }), out)
+
+    def fill_out_page_meta_fields(self):
+        self.page.search_description = 'Hello, world'
+        self.page.search_image = Image.objects.create(
+            title='Page image', file=get_test_image_file())
+
+    def test_page_twitter_render(self):
+        self.fill_out_page_meta_fields()
+
+        out = self.render_meta()
+
+        self.assertInHTML(self.meta({
+            'name': 'twitter:description', 'content': self.page.search_description,
+        }), out)
+        self.assertInHTML(self.meta({
+            'name': 'twitter:image',
+            'content': get_meta_image_url(self.request, self.page.search_image),
+        }), out)
+
+    def test_page_og_render(self):
+        self.fill_out_page_meta_fields()
+
+        out = self.render_meta()
+
+        self.assertInHTML(self.meta({
+            'property': 'og:description', 'content': self.page.search_description,
+        }), out)
+        self.assertInHTML(self.meta({
+            'property': 'og:image',
+            'content': get_meta_image_url(self.request, self.page.search_image),
+        }), out)
+
+    def test_page_misc_render(self):
+        self.fill_out_page_meta_fields()
+
+        out = self.render_meta()
+
+        self.assertInHTML(self.meta({
+            'itemprop': 'description', 'content': self.page.search_description,
+        }), out)
+        self.assertInHTML(self.meta({
+            'itemprop': 'image',
+            'content': get_meta_image_url(self.request, self.page.search_image),
+        }), out)
+
+    def test_page_generic_render(self):
+        self.fill_out_page_meta_fields()
+
+        out = self.render_meta()
+
+        self.assertInHTML(self.meta({
+            'name': 'description', 'content': self.page.search_description,
         }), out)
 
 
