@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.2.0
+~~~~~
+ * Feature: Added support for custom images
+ * Fix: Fixed bug causing descriptions not to show in rendered tag
+ * Improvement: Added tests
+ * Improvement: Cleaned up code
+
 0.1.3
 ~~~~~
  * Fix: Added missing migrations
