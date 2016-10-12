@@ -1,16 +1,18 @@
+{% if global_settings %}
 <meta name="twitter:card" content="{{global_settings.card_type}}">
-<meta name="twitter:title" content="{{page.title}}">
+{% endif %}
+<meta name="twitter:title" content="{{meta_title}}">
 <meta name="twitter:description" content="{{meta_description}}">
 <meta name="twitter:image" content="{{meta_image}}">
 
-<meta property="og:url" content="{{page.full_url}}" />
-<meta property="og:title" content="{{page.title}}" />
+<meta property="og:url" content="{{meta_url}}" />
+<meta property="og:title" content="{{meta_title}}" />
 <meta property="og:description" content="{{meta_description}}" />
 <meta property="og:site_name" content="{{site_name}}" />
 <meta property="og:image" content="{{meta_image}}" />
 
-<meta itemprop='url' content='{{page.full_url}}'/>
-<meta itemprop="name" content="{{page.title}}">
+<meta itemprop='url' content='{{meta_url}}'/>
+<meta itemprop="name" content="{{meta_title}}">
 <meta itemprop='description' content='{{meta_description}}' />
 <meta itemprop='image' content='{{meta_image}}' />
 
