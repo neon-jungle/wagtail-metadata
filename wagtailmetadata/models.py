@@ -10,7 +10,8 @@ TWITTER_CARD_TYPES = [
     ('summary_large_image', 'Summary card with large image'),
 ]
 
-IMAGE_MODEL = get_image_model()
+IMAGE_MODEL = get_image_model_string()
+S
 
 class SiteMetadataPreferences(models.Model):
     site = models.OneToOneField(Site, unique=True, db_index=True, editable=False)
