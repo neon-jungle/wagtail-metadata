@@ -4,9 +4,12 @@ from wagtailmetadata import tags
 
 
 @jinja2.contextfunction
-def meta_tags(context):
+def meta_tags(context, model_name):
     request = context['request']
-    page = context['page']
+    if model_name:
+        page = context[model_name]
+    else:
+        page = context['self']
 
     return jinja2.Markup(tags.meta_tags(request, page))
 

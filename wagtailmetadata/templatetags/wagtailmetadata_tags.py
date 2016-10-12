@@ -5,8 +5,11 @@ register = template.Library()
 
 
 @register.simple_tag(takes_context=True)
-def meta_tags(context):
+def meta_tags(context, model_name):
     request = context['request']
-    page = context['self']
+    if model_name:
+        page = context[model_name]
+    else:
+        page = context['self']
 
     return tags.meta_tags(request, page)
