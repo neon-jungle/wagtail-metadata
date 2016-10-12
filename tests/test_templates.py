@@ -6,10 +6,10 @@ from django.utils.html import format_html
 from wagtail.wagtailcore.models import Site
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.tests.utils import get_test_image_file
-
-from tests.app.models import TestPage
 from wagtailmetadata.models import SiteMetadataPreferences
 from wagtailmetadata.tags import get_meta_image_url
+
+from tests.app.models import TestModel, TestPage
 
 
 class TemplateCase(object):
@@ -29,6 +29,7 @@ class TemplateCase(object):
             site_description='Site description'
         )
         self.page = self.site.root_page.add_child(instance=TestPage(title='Test Page'))
+        self.test_model = TestModel.objects.create()
 
     def render(self, string, context=None, request_context=True):
         if context is None:
@@ -101,6 +102,21 @@ class TemplateCase(object):
             'name': 'description', 'content': self.settings.site_description,
         }), out)
 
+    def test_custom_model(self):
+        out = self.render_with_model()
+        self.assertInHTML(self.meta({
+            'itemprop': 'url',
+            'content': self.test_model.get_meta_url()
+        }), out)
+        self.assertInHTML(self.meta({
+            'itemprop': 'name',
+            'content': self.test_model.get_meta_title()
+        }), out)
+        self.assertInHTML(self.meta({
+            'itemprop': 'description',
+            'content': self.test_model.get_meta_description()
+        }), out)
+
     def fill_out_page_meta_fields(self):
         self.page.search_description = 'Hello, world'
         self.page.search_image = Image.objects.create(
@@ -161,9 +177,15 @@ class TestJinja2(TemplateCase, TestCase):
     def render_meta(self):
         return self.render('{{ meta_tags() }}', context={'page': self.page})
 
+    def render_with_model(self):
+        return self.render('{{ meta_tags(custom) }}', context={'custom': self.test_model})
+
 
 class TestDjangoTemplateEngine(TemplateCase, TestCase):
     engine = engines['django']
 
     def render_meta(self):
         return self.render('{% load wagtailmetadata_tags %}{% meta_tags %}', context={'self': self.page})
+
+    def render_with_model(self):
+        return self.render('{% load wagtailmetadata_tags %}{% meta_tags custom %}', context={'custom': self.test_model})
