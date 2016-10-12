@@ -68,7 +68,7 @@ class MetadataPageMixin(MetadataMixin, Page):
         on_delete=models.SET_NULL
     )
 
-    meta_panels = [
+    promote_panels = [
         MultiFieldPanel([
             FieldPanel('slug'),
             FieldPanel('seo_title'),
