@@ -59,7 +59,7 @@ class MetadataMixin(object):
         raise NotImplementedError()
 
 
-class MetadataPageMixin(MetadataMixin, Page):
+class MetadataPageMixin(MetadataMixin, models.Model):
     search_image = models.ForeignKey(
         IMAGE_MODEL,
         null=True,
