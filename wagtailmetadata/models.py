@@ -11,7 +11,7 @@ TWITTER_CARD_TYPES = [
 ]
 
 IMAGE_MODEL = get_image_model_string()
-S
+
 
 class SiteMetadataPreferences(models.Model):
     site = models.OneToOneField(Site, unique=True, db_index=True, editable=False)
