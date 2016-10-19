@@ -3,6 +3,7 @@ cache: pip
 
 # Matrix of build options
 python:
+  - '2.7'
   - '3.4'
   - '3.5'
 
