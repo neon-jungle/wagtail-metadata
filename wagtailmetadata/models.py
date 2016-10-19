@@ -1,51 +1,18 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
-from wagtail.wagtailcore.models import Site
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from .utils import get_image_model_string
 
-TWITTER_CARD_TYPES = [
-    ('summary', 'Summary card'),
-    ('summary_large_image', 'Summary card with large image'),
-]
-
-
-class SiteMetadataPreferences(models.Model):
-    site = models.OneToOneField(Site, unique=True, db_index=True, editable=False)
-    site_image = models.ForeignKey(
-        get_image_model_string(),
-        null=True,
-        blank=True,
-        related_name='+',
-        on_delete=models.SET_NULL,
-        help_text="""
-        This is the default image that will be shown when your page is
-         shared on social media or is found on search engines """)
-    site_description = models.TextField(help_text="""
-    This is the default description displayed when your page is shared on
-     social media or is found on search engines""")
-
-    # Twitter settings
-    card_type = models.CharField(max_length=128, choices=TWITTER_CARD_TYPES)
-
-    general_panels = [
-        MultiFieldPanel([
-            ImageChooserPanel('site_image'),
-            FieldPanel('site_description')
-        ], heading='General')
-    ]
-
-    twitter_panels = [
-        MultiFieldPanel([
-            FieldPanel('card_type')
-        ], heading='Twitter')
-    ]
-
 
 class MetadataMixin(object):
+    """
+    An object that can be shared on social media.
+    """
+
     def get_meta_url(self):
+        """The full URL to this object, including protocol and domain."""
         raise NotImplementedError()
 
     def get_meta_title(self):
@@ -55,10 +22,27 @@ class MetadataMixin(object):
         raise NotImplementedError()
 
     def get_meta_image(self):
-        raise NotImplementedError()
+        """
+        Get the image to use for this object.
+        Can be None if there is no relevant image.
+        """
+        return None
+
+    def get_meta_twitter_card_type(self):
+        """
+        Get the Twitter card type for this object.
+        See https://dev.twitter.com/cards/types.
+        Defaults to 'summary_large_image' if the object has an image,
+        otherwise 'summary'.
+        """
+        if self.get_meta_image() is not None:
+            return 'summary_large_image'
+        else:
+            return 'summary'
 
 
 class MetadataPageMixin(MetadataMixin, models.Model):
+    """An implementation of MetadataMixin for Wagtail pages."""
     search_image = models.ForeignKey(
         get_image_model_string(),
         null=True,

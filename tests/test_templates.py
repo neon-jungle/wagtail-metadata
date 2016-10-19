@@ -6,10 +6,9 @@ from django.utils.html import format_html
 from wagtail.wagtailcore.models import Site
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.tests.utils import get_test_image_file
-from wagtailmetadata.models import SiteMetadataPreferences
-from wagtailmetadata.tags import get_meta_image_url
 
 from tests.app.models import TestModel, TestPage
+from wagtailmetadata.tags import get_meta_image_url
 
 
 class TemplateCase(object):
@@ -21,14 +20,15 @@ class TemplateCase(object):
         self.request = self.factory.get('/test/')
         self.request.site = self.site
 
-        self.image = Image.objects.create(title='Test Image', file=get_test_image_file())
-        self.settings = SiteMetadataPreferences.objects.create(
-            site=self.site,
-            site_image=self.image,
-            card_type='summary',
-            site_description='Site description'
+        self.image = Image.objects.create(
+            title='Test Image',
+            file=get_test_image_file(),
         )
-        self.page = self.site.root_page.add_child(instance=TestPage(title='Test Page'))
+        self.page = self.site.root_page.add_child(instance=TestPage(
+            title='Test Page',
+            search_image=self.image,
+            search_description='Some test content description',
+        ))
         self.test_model = TestModel.objects.create()
 
     def render(self, string, context=None, request_context=True):
@@ -48,18 +48,26 @@ class TemplateCase(object):
     def test_twitter_render(self):
         out = self.render_meta()
         self.assertInHTML(self.meta({
-            'name': 'twitter:card', 'content': self.settings.card_type
+            'name': 'twitter:card', 'content': 'summary_large_image',
         }), out)
         self.assertInHTML(self.meta({
-            'name': 'twitter:title', 'content': self.page.title
+            'name': 'twitter:title', 'content': self.page.title,
         }), out)
         self.assertInHTML(self.meta({
-            'name': 'twitter:description', 'content': self.settings.site_description,
+            'name': 'twitter:description', 'content': self.page.search_description,
         }), out)
         self.assertInHTML(self.meta({
             'name': 'twitter:image',
-            'content': get_meta_image_url(self.request, self.settings.site_image),
+            'content': get_meta_image_url(self.request, self.page.search_image),
         }), out)
+
+    def test_twitter_no_image(self):
+        self.page.search_image = None
+        out = self.render_meta()
+        self.assertInHTML(self.meta({
+            'name': 'twitter:card', 'content': 'summary',
+        }), out)
+        self.assertNotIn('twitter:image', out)
 
     def test_og_render(self):
         out = self.render_meta()
@@ -70,15 +78,20 @@ class TemplateCase(object):
             'property': 'og:title', 'content': self.page.title
         }), out)
         self.assertInHTML(self.meta({
-            'property': 'og:description', 'content': self.settings.site_description,
+            'property': 'og:description', 'content': self.page.search_description,
         }), out)
         self.assertInHTML(self.meta({
             'property': 'og:site_name', 'content': settings.WAGTAIL_SITE_NAME
         }), out)
         self.assertInHTML(self.meta({
             'property': 'og:image',
-            'content': get_meta_image_url(self.request, self.settings.site_image),
+            'content': get_meta_image_url(self.request, self.page.search_image),
         }), out)
+
+    def test_og_no_image(self):
+        self.page.search_image = None
+        out = self.render_meta()
+        self.assertNotIn('og:image', out)
 
     def test_misc_render(self):
         out = self.render_meta()
@@ -89,17 +102,17 @@ class TemplateCase(object):
             'itemprop': 'name', 'content': self.page.title
         }), out)
         self.assertInHTML(self.meta({
-            'itemprop': 'description', 'content': self.settings.site_description,
+            'itemprop': 'description', 'content': self.page.search_description,
         }), out)
         self.assertInHTML(self.meta({
             'itemprop': 'image',
-            'content': get_meta_image_url(self.request, self.settings.site_image),
+            'content': get_meta_image_url(self.request, self.page.search_image),
         }), out)
 
     def test_generic_render(self):
         out = self.render_meta()
         self.assertInHTML(self.meta({
-            'name': 'description', 'content': self.settings.site_description,
+            'name': 'description', 'content': self.page.search_description,
         }), out)
 
     def test_custom_model(self):
