@@ -6,7 +6,6 @@ from django.utils.html import format_html
 from wagtail.wagtailcore.models import Site
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.tests.utils import get_test_image_file
-from wagtailmetadata.models import SiteMetadataPreferences
 
 from tests.app.models import TestModel, TestPage
 from wagtailmetadata.tags import get_meta_image_url
@@ -21,10 +20,6 @@ class TemplateCase(object):
         self.request = self.factory.get('/test/')
         self.request.site = self.site
 
-        self.settings = SiteMetadataPreferences.objects.create(
-            site=self.site,
-            card_type='summary',
-        )
         self.image = Image.objects.create(
             title='Test Image',
             file=get_test_image_file(),
@@ -53,7 +48,7 @@ class TemplateCase(object):
     def test_twitter_render(self):
         out = self.render_meta()
         self.assertInHTML(self.meta({
-            'name': 'twitter:card', 'content': self.settings.card_type
+            'name': 'twitter:card', 'content': 'summary_large_image',
         }), out)
         self.assertInHTML(self.meta({
             'name': 'twitter:title', 'content': self.page.title,

@@ -6,23 +6,9 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from .utils import get_image_model_string
 
-TWITTER_CARD_TYPES = [
-    ('summary', 'Summary card'),
-    ('summary_large_image', 'Summary card with large image'),
-]
-
 
 class SiteMetadataPreferences(models.Model):
     site = models.OneToOneField(Site, unique=True, db_index=True, editable=False)
-
-    # Twitter settings
-    card_type = models.CharField(max_length=128, choices=TWITTER_CARD_TYPES)
-
-    twitter_panels = [
-        MultiFieldPanel([
-            FieldPanel('card_type')
-        ], heading='Twitter')
-    ]
 
 
 class MetadataMixin(object):
@@ -36,7 +22,23 @@ class MetadataMixin(object):
         raise NotImplementedError()
 
     def get_meta_image(self):
-        raise NotImplementedError()
+        """
+        Get the image to use for this object.
+        Can be None if there is no relevant image.
+        """
+        return None
+
+    def get_meta_twitter_card_type(self):
+        """
+        Get the Twitter card type for this object.
+        See https://dev.twitter.com/cards/types.
+        Defaults to 'summary_large_image' if the object has an image,
+        otherwise 'summary'.
+        """
+        if self.get_meta_image() is not None:
+            return 'summary_large_image'
+        else:
+            return 'summary'
 
 
 class MetadataPageMixin(MetadataMixin, models.Model):
