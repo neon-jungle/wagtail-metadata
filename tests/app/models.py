@@ -1,9 +1,16 @@
 from django.db import models
+from django.utils import six
 from wagtail.wagtailcore.models import Page
+
 from wagtailmetadata.models import MetadataMixin, MetadataPageMixin
 
 
-class TestPage(MetadataPageMixin, Page):
+class TestPageBase(type(Page)):
+    """See https://code.djangoproject.com/ticket/27337"""
+    pass
+
+
+class TestPage(six.with_metaclass(TestPageBase, MetadataPageMixin, Page)):
     pass
 
 

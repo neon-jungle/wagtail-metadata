@@ -1,5 +1,6 @@
 import jinja2
 from jinja2.ext import Extension
+
 from wagtailmetadata import tags
 
 
@@ -14,7 +15,7 @@ def meta_tags(context, model=None):
 
 class WagtailMetadataExtension(Extension):
     def __init__(self, environment):
-        super().__init__(environment)
+        super(WagtailMetadataExtension, self).__init__(environment)
 
         self.environment.globals.update({
             'meta_tags': meta_tags,
