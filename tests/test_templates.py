@@ -1,4 +1,6 @@
-from django.conf import settings
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.forms.utils import flatatt
 from django.template import engines
 from django.test import RequestFactory, TestCase
@@ -15,6 +17,8 @@ class TemplateCase(object):
 
     def setUp(self):
         self.site = Site.objects.first()
+        self.site.site_name = 'Example site'
+        self.site.save()
 
         self.factory = RequestFactory()
         self.request = self.factory.get('/test/')
@@ -51,7 +55,8 @@ class TemplateCase(object):
             'name': 'twitter:card', 'content': 'summary_large_image',
         }), out)
         self.assertInHTML(self.meta({
-            'name': 'twitter:title', 'content': self.page.title,
+            'name': 'twitter:title',
+            'content': self.page.get_meta_title() + ' — ' + self.site.site_name,
         }), out)
         self.assertInHTML(self.meta({
             'name': 'twitter:description', 'content': self.page.search_description,
@@ -75,13 +80,14 @@ class TemplateCase(object):
             'property': 'og:url', 'content': self.page.full_url
         }), out)
         self.assertInHTML(self.meta({
-            'property': 'og:title', 'content': self.page.title
+            'property': 'og:title',
+            'content': self.page.get_meta_title(),
         }), out)
         self.assertInHTML(self.meta({
             'property': 'og:description', 'content': self.page.search_description,
         }), out)
         self.assertInHTML(self.meta({
-            'property': 'og:site_name', 'content': settings.WAGTAIL_SITE_NAME
+            'property': 'og:site_name', 'content': self.site.site_name
         }), out)
         self.assertInHTML(self.meta({
             'property': 'og:image',
@@ -99,7 +105,8 @@ class TemplateCase(object):
             'itemprop': 'url', 'content': self.page.full_url
         }), out)
         self.assertInHTML(self.meta({
-            'itemprop': 'name', 'content': self.page.title
+            'itemprop': 'name',
+            'content': self.page.get_meta_title() + ' — ' + self.site.site_name,
         }), out)
         self.assertInHTML(self.meta({
             'itemprop': 'description', 'content': self.page.search_description,
@@ -123,7 +130,7 @@ class TemplateCase(object):
         }), out)
         self.assertInHTML(self.meta({
             'itemprop': 'name',
-            'content': self.test_model.get_meta_title()
+            'content': self.test_model.get_meta_title() + ' — ' + self.site.site_name,
         }), out)
         self.assertInHTML(self.meta({
             'itemprop': 'description',

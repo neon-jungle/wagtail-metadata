@@ -1,5 +1,5 @@
 <meta name="twitter:card" content="{{ object.get_meta_twitter_card_type }}">
-<meta name="twitter:title" content="{{ object.get_meta_title }}">
+<meta name="twitter:title" content="{{ object.get_meta_title }} — {{ site_name }}">
 <meta name="twitter:description" content="{{ object.get_meta_description }}">
 {% if meta_image %}<meta name="twitter:image" content="{{ meta_image }}">{% endif %}
 
@@ -10,7 +10,7 @@
 {% if meta_image %}<meta property="og:image" content="{{ meta_image }}" />{% endif %}
 
 <meta itemprop='url' content='{{ object.get_meta_url }}'/>
-<meta itemprop="name" content="{{ object.get_meta_title }}">
+<meta itemprop="name" content="{{ object.get_meta_title }} — {{ site_name }}">
 <meta itemprop='description' content='{{ object.get_meta_description }}' />
 {% if meta_image %}<meta itemprop='image' content='{{meta_image}}' />{% endif %}
 

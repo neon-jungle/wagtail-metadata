@@ -12,7 +12,7 @@ def get_meta_image_url(request, image):
 
 def meta_tags(request, model):
     context = {
-        'site_name': settings.WAGTAIL_SITE_NAME,
+        'site_name': request.site.site_name,
         'object': model,
     }
 
