@@ -1,19 +1,19 @@
 {% if global_settings %}
 <meta name="twitter:card" content="{{global_settings.card_type}}">
 {% endif %}
-<meta name="twitter:title" content="{{meta_title}}">
-<meta name="twitter:description" content="{{meta_description}}">
-<meta name="twitter:image" content="{{meta_image}}">
+<meta name="twitter:title" content="{{ object.get_meta_title }}">
+<meta name="twitter:description" content="{{ object.get_meta_description }}">
+{% if meta_image %}<meta name="twitter:image" content="{{ meta_image }}">{% endif %}
 
-<meta property="og:url" content="{{meta_url}}" />
-<meta property="og:title" content="{{meta_title}}" />
-<meta property="og:description" content="{{meta_description}}" />
-<meta property="og:site_name" content="{{site_name}}" />
-<meta property="og:image" content="{{meta_image}}" />
+<meta property="og:url" content="{{ object.get_meta_url }}" />
+<meta property="og:title" content="{{ object.get_meta_title }}" />
+<meta property="og:description" content="{{ object.get_meta_description }}" />
+<meta property="og:site_name" content="{{ site_name }}" />
+{% if meta_image %}<meta property="og:image" content="{{ meta_image }}" />{% endif %}
 
-<meta itemprop='url' content='{{meta_url}}'/>
-<meta itemprop="name" content="{{meta_title}}">
-<meta itemprop='description' content='{{meta_description}}' />
-<meta itemprop='image' content='{{meta_image}}' />
+<meta itemprop='url' content='{{ object.get_meta_url }}'/>
+<meta itemprop="name" content="{{ object.get_meta_title }}">
+<meta itemprop='description' content='{{ object.get_meta_description }}' />
+{% if meta_image %}<meta itemprop='image' content='{{meta_image}}' />{% endif %}
 
-<meta name="description" content="{{meta_description}}">
+<meta name="description" content="{{ object.get_meta_description }}">

@@ -14,28 +14,9 @@ TWITTER_CARD_TYPES = [
 
 class SiteMetadataPreferences(models.Model):
     site = models.OneToOneField(Site, unique=True, db_index=True, editable=False)
-    site_image = models.ForeignKey(
-        get_image_model_string(),
-        null=True,
-        blank=True,
-        related_name='+',
-        on_delete=models.SET_NULL,
-        help_text="""
-        This is the default image that will be shown when your page is
-         shared on social media or is found on search engines """)
-    site_description = models.TextField(help_text="""
-    This is the default description displayed when your page is shared on
-     social media or is found on search engines""")
 
     # Twitter settings
     card_type = models.CharField(max_length=128, choices=TWITTER_CARD_TYPES)
-
-    general_panels = [
-        MultiFieldPanel([
-            ImageChooserPanel('site_image'),
-            FieldPanel('site_description')
-        ], heading='General')
-    ]
 
     twitter_panels = [
         MultiFieldPanel([
