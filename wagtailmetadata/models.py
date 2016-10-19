@@ -1,18 +1,18 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
-from wagtail.wagtailcore.models import Site
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from .utils import get_image_model_string
 
 
-class SiteMetadataPreferences(models.Model):
-    site = models.OneToOneField(Site, unique=True, db_index=True, editable=False)
-
-
 class MetadataMixin(object):
+    """
+    An object that can be shared on social media.
+    """
+
     def get_meta_url(self):
+        """The full URL to this object, including protocol and domain."""
         raise NotImplementedError()
 
     def get_meta_title(self):
@@ -42,6 +42,7 @@ class MetadataMixin(object):
 
 
 class MetadataPageMixin(MetadataMixin, models.Model):
+    """An implementation of MetadataMixin for Wagtail pages."""
     search_image = models.ForeignKey(
         get_image_model_string(),
         null=True,
