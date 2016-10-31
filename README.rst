@@ -54,7 +54,10 @@ You will need to implement the following methods:
             return "http://example.com/my-custom-object/"
 
         def get_meta_description(self):
-            """A short text description of this object"""
+            """
+            A short text description of this object.
+            This should be plain text, not HTML.
+            """
             return "This thing is really cool, you should totally check it out"
 
         def get_meta_image(self):
