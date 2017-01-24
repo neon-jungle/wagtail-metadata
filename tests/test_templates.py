@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import uuid
+
 from django.forms.utils import flatatt
 from django.template import engines
 from django.test import RequestFactory, TestCase
 from django.utils.html import format_html
+from tests.app.models import TestModel, TestPage
 from wagtail.wagtailcore.models import Site
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.tests.utils import get_test_image_file
-
-from tests.app.models import TestModel, TestPage
+from wagtailmetadata.models import MetadataSettings
 from wagtailmetadata.tags import get_meta_image_url
 
 
@@ -19,6 +21,12 @@ class TemplateCase(object):
         self.site = Site.objects.first()
         self.site.site_name = 'Example site'
         self.site.save()
+        self.rnd_uuid = uuid.uuid4()
+        self.metadata_settings = MetadataSettings.objects.create(
+            site=self.site,
+            twitter_handle='test',
+            fb_app_id=self.rnd_uuid,
+        )
 
         self.factory = RequestFactory()
         self.request = self.factory.get('/test/')
@@ -98,6 +106,18 @@ class TemplateCase(object):
         self.page.search_image = None
         out = self.render_meta()
         self.assertNotIn('og:image', out)
+
+    def test_fb_app_id(self):
+        out = self.render_meta()
+        self.assertInHTML(self.meta({
+            'property': 'fb:app_id', 'content': self.rnd_uuid
+        }), out)
+
+    def test_twitter_handle(self):
+        out = self.render_meta()
+        self.assertInHTML(self.meta({
+            'name': 'twitter:site', 'content': '@test'
+        }), out)
 
     def test_misc_render(self):
         out = self.render_meta()
