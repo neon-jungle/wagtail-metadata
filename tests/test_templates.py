@@ -11,6 +11,7 @@ from tests.app.models import TestModel, TestPage
 from wagtail.wagtailcore.models import Site
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.tests.utils import get_test_image_file
+
 from wagtailmetadata.models import MetadataSettings
 from wagtailmetadata.tags import get_meta_image_url
 

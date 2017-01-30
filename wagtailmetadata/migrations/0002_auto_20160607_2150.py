@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 import django.db.models.deletion
 from django.db import migrations, models
+
 from wagtailmetadata.utils import get_image_model_string
 
 IMAGE_MODEL = get_image_model_string()

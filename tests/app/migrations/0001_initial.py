@@ -3,8 +3,9 @@
 from __future__ import unicode_literals
 
 import django.db.models.deletion
-import wagtailmetadata.models
 from django.db import migrations, models
+
+import wagtailmetadata.models
 
 
 class Migration(migrations.Migration):

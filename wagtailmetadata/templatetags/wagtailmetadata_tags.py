@@ -1,4 +1,5 @@
 from django import template
+
 from wagtailmetadata import tags
 
 register = template.Library()
