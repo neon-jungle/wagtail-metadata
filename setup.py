@@ -23,7 +23,7 @@ setup(
     zip_safe=False,
     license='BSD License',
 
-    packages=find_packages(),
+    packages=find_packages(exclude=['tests', 'tests*']),
 
     include_package_data=True,
     package_data={},
