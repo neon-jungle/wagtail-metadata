@@ -27,8 +27,9 @@ Metadata for the page will then be built from the page details.
     from wagtail.wagtailcore.models import Page
     from wagtailmetadata.models import MetadataPageMixin
 
-    class ContentPage(MetadataPageMixin, Page):
-        pass
+    class ContentPage(Page, MetadataPageMixin):
+    
+        promote_panels = MetadataPageMixin.promote_panels
 
 .. note::
 
