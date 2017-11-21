@@ -4,14 +4,33 @@ wagtail-metadata
 
 A tool to assist with metadata for social media and search engines.
 
+Compatibility
+==========
+
+Wagtail-metadata works with Wagtail v1.6 and upwards. 
+
 Installing
 ==========
 
-Install using pip::
+First, install using pip::
 
     pip install wagtail-metadata
 
-It works with Wagtail 1.6 and upwards.
+Then add `wagtailmetadata` to your project's `base.py` settings:
+
+    INSTALLED_APPS = [
+        'home',
+        'search',
+        # etc...
+
+        'wagtail.contrib.settings',
+        'wagtail.contrib.modeladmin',
+        # etc...
+
+        # Add the following:
+        'wagtailmetadata',
+
+    ]
 
 Using
 =====
