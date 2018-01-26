@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.edit_handlers import MultiFieldPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
 
 from .utils import get_image_model_string
 
