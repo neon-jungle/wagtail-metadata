@@ -1,3 +1,4 @@
+{% if settings.twitter_handle %}<meta name="twitter:site" content="@{{settings.twitter_handle}}" />{% endif %}
 <meta name="twitter:card" content="{{ object.get_meta_twitter_card_type }}">
 <meta name="twitter:title" content="{{ object.get_meta_title }} — {{ site_name }}">
 <meta name="twitter:description" content="{{ object.get_meta_description }}">
@@ -8,6 +9,7 @@
 <meta property="og:description" content="{{ object.get_meta_description }}" />
 <meta property="og:site_name" content="{{ site_name }}" />
 {% if meta_image %}<meta property="og:image" content="{{ meta_image }}" />{% endif %}
+{% if settings.fb_app_id %}<meta property="fb:app_id" content="{{settings.fb_app_id}}" />{% endif %}
 
 <meta itemprop='url' content='{{ object.get_meta_url }}'/>
 <meta itemprop="name" content="{{ object.get_meta_title }} — {{ site_name }}">

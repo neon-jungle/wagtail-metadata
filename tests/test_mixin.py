@@ -1,11 +1,10 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase
+from tests.app.models import TestPage
 from wagtail.wagtailcore.models import Site
 from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.tests.utils import get_test_image_file
-
-from tests.app.models import TestPage
 
 
 class TestMetadataPageMixin(TestCase):
