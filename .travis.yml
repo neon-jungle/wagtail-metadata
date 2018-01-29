@@ -12,8 +12,10 @@ env:
     - DJANGO_SETTINGS_MODULE="tests.settings"
     - TOX_ENV=
   matrix:
-    - DJANGO='19' WAGTAIL='16'
-    - DJANGO='110' WAGTAIL='16'
+    - DJANGO='110' WAGTAIL='112'
+    - DJANGO='110' WAGTAIL='113'
+    - DJANGO='111' WAGTAIL='112'
+    - DJANGO='111' WAGTAIL='113'
 
 before_install:
     # - sudo add-apt-repository ppa:mc3man/trusty-media -y // Inlcudes all multimedia options but 404s currently :(

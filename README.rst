@@ -7,7 +7,7 @@ A tool to assist with metadata for social media and search engines.
 Compatibility
 ==========
 
-Wagtail-metadata works with Wagtail v1.6 and upwards.
+Wagtail-metadata works with Wagtail v1.12 and upwards.
 
 Installing
 ==========
