@@ -1,7 +1,4 @@
-from django.conf import settings
 from django.template.loader import render_to_string
-
-from wagtailmetadata.models import MetadataSettings
 
 
 def get_meta_image_url(request, image):
@@ -16,7 +13,6 @@ def meta_tags(request, model):
     context = {
         'site_name': request.site.site_name,
         'object': model,
-        'settings': MetadataSettings.for_site(request.site)
     }
 
     meta_image = model.get_meta_image()
