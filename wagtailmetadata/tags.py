@@ -20,4 +20,5 @@ def meta_tags(request, model):
         meta_image = get_meta_image_url(request, meta_image)
     context['meta_image'] = meta_image
 
-    return render_to_string('wagtailmetadata/parts/tags.html', context)
+    return render_to_string('wagtailmetadata/parts/tags.html',
+                            context, request=request)
