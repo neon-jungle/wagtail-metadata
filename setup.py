@@ -3,14 +3,14 @@
 Install wagtail-metadata using setuptools
 """
 
+from setuptools import find_packages, setup
+
 with open('README.rst', 'r') as f:
     readme = f.read()
 
-from setuptools import find_packages, setup
-
 setup(
     name='wagtail-metadata',
-    version='0.4.0',
+    version='0.4.1',
     description="A tool to assist with metadata for social media.",
     long_description=readme,
     author='Liam Brenner',
