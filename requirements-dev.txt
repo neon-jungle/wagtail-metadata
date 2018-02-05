@@ -1,3 +1,5 @@
 flake8
 isort
 jinja2
+restructuredtext_lint
+pygments
