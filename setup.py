@@ -10,7 +10,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='wagtail-metadata',
-    version='0.3.2',
+    version='0.4.0',
     description="A tool to assist with metadata for social media.",
     long_description=readme,
     author='Liam Brenner',
