@@ -1,19 +1,25 @@
-{% if settings.twitter_handle %}<meta name="twitter:site" content="@{{settings.twitter_handle}}" />{% endif %}
+{% block tags %}
+{% block twitter %}
 <meta name="twitter:card" content="{{ object.get_meta_twitter_card_type }}">
 <meta name="twitter:title" content="{{ object.get_meta_title }} — {{ site_name }}">
 <meta name="twitter:description" content="{{ object.get_meta_description }}">
 {% if meta_image %}<meta name="twitter:image" content="{{ meta_image }}">{% endif %}
+{% endblock twitter %}
 
+{% block opengraph %}
 <meta property="og:url" content="{{ object.get_meta_url }}" />
 <meta property="og:title" content="{{ object.get_meta_title }}" />
 <meta property="og:description" content="{{ object.get_meta_description }}" />
 <meta property="og:site_name" content="{{ site_name }}" />
 {% if meta_image %}<meta property="og:image" content="{{ meta_image }}" />{% endif %}
-{% if settings.fb_app_id %}<meta property="fb:app_id" content="{{settings.fb_app_id}}" />{% endif %}
+{% endblock opengraph %}
 
+{% block meta %}
 <meta itemprop='url' content='{{ object.get_meta_url }}'/>
 <meta itemprop="name" content="{{ object.get_meta_title }} — {{ site_name }}">
 <meta itemprop='description' content='{{ object.get_meta_description }}' />
 {% if meta_image %}<meta itemprop='image' content='{{meta_image}}' />{% endif %}
 
 <meta name="description" content="{{ object.get_meta_description }}">
+{% endblock meta %}
+{% endblock tags %}

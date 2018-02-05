@@ -147,3 +147,55 @@ You can specify a different object to use if you need to:
 .. code-block:: html
 
     {{ meta_tags(my_custom_object) }}
+
+Adding extra tags
+=================
+
+If you need to add extra meta tags, to add the twitter:site tag for example,
+you can extend the Wagtail Metadata template.
+First, create any models that you might need to hold the extra data:
+
+.. code-block:: python
+
+    from wagtail.contrib.settings.models import BaseSetting, register_setting
+
+    @register_setting
+    class TwitterName(BaseSetting):
+        handle = models.CharField(max_length=20)
+
+You could also add extra fields to a page model and output them as meta tags:
+
+.. code-block:: python
+
+    class MyPage(MetadataPageMixin, Page):
+        body = RichTextField()
+        author_twitter_handle = models.CharField(max_length=20)
+
+Then, override the ``wagtailmetadata/parts/tags.html`` template
+and add your tags to the relevant blocks:
+
+.. code-block:: html
+
+    {% extends "wagtailmetadata/parts/tags.html" %}
+
+    {% block twitter %}
+        {{ block.super }}
+        <meta name="twitter:site" content="@{{ settings.myapp.TwitterName.twitter_handle }}" />
+        <meta name="twitter:creator" content="@{{ model.author_twitter_handle }}" />
+    {% endblock %}
+
+The ``wagtailmetadata/parts/tags.html`` template defines the following blocks
+you can override or extend:
+
+``{% block tags %}``
+    This block surrounds the whole template.
+    You can override this block to append extra tags before or after the standard tags.
+
+``{% block twitter %}``
+    This block surrounds the Twitter card tags.
+
+``{% block opengraph %}``
+    This block surrounds the Open Graph tags
+
+``{% block meta %}``
+    This block surrounds the standard meta tags defined in HTML.

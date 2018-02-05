@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy
-from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
@@ -76,14 +75,3 @@ class MetadataPageMixin(MetadataMixin, models.Model):
 
     class Meta:
         abstract = True
-
-
-@register_setting
-class MetadataSettings(BaseSetting):
-    twitter_handle = models.CharField(max_length=16, blank=True, null=True, help_text='Not including the @ symbol')
-    fb_app_id = models.CharField(max_length=128, blank=True, null=True)
-
-    panels = [
-        FieldPanel('twitter_handle'),
-        FieldPanel('fb_app_id')
-    ]
