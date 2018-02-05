@@ -1,35 +1,21 @@
 language: python
 cache: pip
 
-# Matrix of build options
-python:
-  - '2.7'
-  - '3.4'
-  - '3.5'
-
-env:
-  global:
-    - DJANGO_SETTINGS_MODULE="tests.settings"
-    - TOX_ENV=
-  matrix:
-    - DJANGO='110' WAGTAIL='112'
-    - DJANGO='110' WAGTAIL='113'
-    - DJANGO='111' WAGTAIL='112'
-    - DJANGO='111' WAGTAIL='113'
-
-before_install:
-    # - sudo add-apt-repository ppa:mc3man/trusty-media -y // Inlcudes all multimedia options but 404s currently :(
-    - sudo apt-get update -qq
+matrix:
+  include:
+    - env: TOXENV="py27-dj111-wt{112,113}"
+      python: '2.7'
+    - env: TOXENV="py34-dj111-wt{112,113}"
+      python: '3.4'
+    - env: TOXENV="py35-dj111-wt{112,113}"
+      python: '3.5'
+    - env: TOXENV="py36-dj111-wt{112,113}"
+      python: '3.6'
+    - env: TOXENV="flake8,isort"
+      python: '3.6'
 
 install:
   - pip install --upgrade pip wheel tox
 
-cache:
-  directories:
-    - $HOME/.cache/pip
-    - $HOME/virtualenv
-
 script:
-  # Run tox using either a specific environment from TOX_ENV,
-  # or building one from the environment variables
-  - tox -e "${TOX_ENV:-py${TRAVIS_PYTHON_VERSION/./}-dj${DJANGO}-wt${WAGTAIL}}"
+  - tox

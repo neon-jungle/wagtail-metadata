@@ -103,7 +103,7 @@ Django
 To use this in a template, first load the template tag library,
 and then insert the metadata by placing ``{% meta_tags %}`` into the ``<head>``:
 
-.. code-block:: html
+.. code-block:: html+django
 
     {% load wagtailmetadata_tags %}
     {% meta_tags %}
@@ -111,7 +111,7 @@ and then insert the metadata by placing ``{% meta_tags %}`` into the ``<head>``:
 By default, this will look for a ``self`` object in the context to pull the metadata from.
 You can specify a different object to use if you need to:
 
-.. code-block:: html
+.. code-block:: html+django
 
     {% load wagtailmetadata_tags %}
     {% meta_tags my_custom_object %}
