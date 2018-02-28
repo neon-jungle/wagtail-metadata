@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import six
-from wagtail.wagtailcore.models import Page
+from wagtail.core.models import Page
 
 from wagtailmetadata.models import MetadataMixin, MetadataPageMixin
 

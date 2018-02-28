@@ -10,7 +10,7 @@ with open('README.rst', 'r') as f:
 
 setup(
     name='wagtail-metadata',
-    version='0.4.1',
+    version='2.0.0',
     description="A tool to assist with metadata for social media.",
     long_description=readme,
     author='Liam Brenner',
@@ -18,7 +18,7 @@ setup(
     url='https://github.com/takeflight/wagtail-metadata',
 
     install_requires=[
-        'wagtail>=1.12,<=1.9999',
+        'wagtail~=2.0',
     ],
     zip_safe=False,
     license='BSD License',

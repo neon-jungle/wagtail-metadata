@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase
-from wagtail.wagtailcore.models import Site
-from wagtail.wagtailimages.models import Image
-from wagtail.wagtailimages.tests.utils import get_test_image_file
+from wagtail.core.models import Site
+from wagtail.images.models import Image
+from wagtail.images.tests.utils import get_test_image_file
 
 from tests.app.models import TestPage
 
