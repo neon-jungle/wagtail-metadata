@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 from django.test import TestCase
 from wagtail.core.models import Site
@@ -25,21 +25,21 @@ class TestMetadataPageMixin(TestCase):
         ))
 
     def test_title(self):
-        self.assertEquals(
+        self.assertEqual(
             self.page.get_meta_title(),
             'Test Page')
 
     def test_url(self):
-        self.assertEquals(
+        self.assertEqual(
             self.page.get_meta_url(),
             'http://localhost/test-page/')
 
     def test_description(self):
-        self.assertEquals(
+        self.assertEqual(
             self.page.get_meta_description(),
             'Some test content description')
 
     def test_image(self):
-        self.assertEquals(
+        self.assertEqual(
             self.page.get_meta_image(),
             self.image)
