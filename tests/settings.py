@@ -21,11 +21,11 @@ INSTALLED_APPS = [
     'django.contrib.admin',
 
     # Wagtail apps
-    'wagtail.wagtailcore',
-    'wagtail.wagtailadmin',
-    'wagtail.wagtaildocs',
-    'wagtail.wagtailusers',
-    'wagtail.wagtailimages',
+    'wagtail.core',
+    'wagtail.admin',
+    'wagtail.documents',
+    'wagtail.users',
+    'wagtail.images',
 ]
 
 ROOT_URLCONF = 'tests.app.urls'
@@ -52,7 +52,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'wagtail.wagtailcore.middleware.SiteMiddleware',
+    'wagtail.core.middleware.SiteMiddleware',
 ]
 
 TEMPLATES = [
@@ -78,8 +78,8 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'extensions': [
-                'wagtail.wagtailcore.jinja2tags.core',
-                'wagtail.wagtailimages.jinja2tags.images',
+                'wagtail.core.jinja2tags.core',
+                'wagtail.images.jinja2tags.images',
                 'wagtailmetadata.jinja2tags.WagtailMetadataExtension'
             ],
         },

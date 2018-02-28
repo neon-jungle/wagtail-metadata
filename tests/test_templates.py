@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 from django.forms.utils import flatatt
 from django.template import engines
 from django.test import RequestFactory, TestCase
 from django.utils.html import format_html
-from wagtail.wagtailcore.models import Site
-from wagtail.wagtailimages.models import Image
-from wagtail.wagtailimages.tests.utils import get_test_image_file
+from wagtail.core.models import Site
+from wagtail.images.models import Image
+from wagtail.images.tests.utils import get_test_image_file
 
 from tests.app.models import TestModel, TestPage
 from wagtailmetadata.tags import get_meta_image_url
