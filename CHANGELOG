@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.0.0
+~~~~~
+ * Dropped python2
+ * Updated wagtail dependency to 2.0
+
+
 0.2.0
 ~~~~~
  * Feature: Added support for custom images
