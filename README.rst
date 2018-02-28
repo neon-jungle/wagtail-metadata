@@ -7,7 +7,7 @@ A tool to assist with metadata for social media and search engines.
 Compatibility
 =============
 
-Wagtail-metadata works with Wagtail v1.12 and upwards.
+Wagtail-metadata works with Wagtail v2.0 and upwards.
 
 Installing
 ==========
@@ -45,7 +45,7 @@ Metadata for the page will then be built from the page details.
 
 .. code-block:: python
 
-    from wagtail.wagtailcore.models import Page
+    from wagtail.core.models import Page
     from wagtailmetadata.models import MetadataPageMixin
 
     class ContentPage(MetadataPageMixin, Page):
