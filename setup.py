@@ -18,7 +18,7 @@ setup(
     url='https://github.com/takeflight/wagtail-metadata',
 
     install_requires=[
-        'wagtail~=2.0',
+        'wagtail>=2.0',
     ],
     zip_safe=False,
     license='BSD License',
