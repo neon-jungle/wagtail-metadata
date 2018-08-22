@@ -48,7 +48,8 @@ class MetadataPageMixin(MetadataMixin, models.Model):
         null=True,
         blank=True,
         related_name='+',
-        on_delete=models.SET_NULL
+        on_delete=models.SET_NULL,
+        verbose_name=ugettext_lazy('Search image')
     )
 
     promote_panels = [
