@@ -186,6 +186,7 @@ class TemplateCase(object):
 
         out = self.render_meta()
 
+        self.assertInHTML("<title>{}</title>".format(self.page.title), out)
         self.assertInHTML(self.meta({
             'name': 'description', 'content': self.page.search_description,
         }), out)
