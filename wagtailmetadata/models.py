@@ -18,6 +18,9 @@ class MetadataMixin(object):
     def get_meta_title(self):
         raise NotImplementedError()
 
+    def get_object_title(self):
+        return self.get_meta_title()
+
     def get_meta_description(self):
         raise NotImplementedError()
 
