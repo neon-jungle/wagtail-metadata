@@ -1,3 +1,4 @@
+from django.template import TemplateSyntaxError
 from django.template.loader import render_to_string
 
 
@@ -10,6 +11,12 @@ def get_meta_image_url(request, image):
 
 
 def meta_tags(request, model):
+    if not request:
+        raise TemplateSyntaxError(
+                "'meta_tags' missing request from context")
+    if not model:
+        raise TemplateSyntaxError(
+            "'meta_tags' tag is missing a model or object")
     context = {
         'site_name': request.site.site_name,
         'object': model,
