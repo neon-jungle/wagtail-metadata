@@ -2,7 +2,7 @@
 
 
 from django.forms.utils import flatatt
-from django.template import engines
+from django.template import TemplateSyntaxError, engines
 from django.test import RequestFactory, TestCase
 from django.utils.html import format_html
 from wagtail.core.models import Site
@@ -191,6 +191,9 @@ class TemplateCase(object):
             'name': 'description', 'content': self.page.search_description,
         }), out)
 
+    def test_error_messages(self):
+        self.assertRaises(TemplateSyntaxError, self.render_with_error)
+
 
 class TestJinja2(TemplateCase, TestCase):
     engine = engines['jinja2']
@@ -201,6 +204,10 @@ class TestJinja2(TemplateCase, TestCase):
     def render_with_model(self):
         return self.render('{{ meta_tags(custom) }}', context={'custom': self.test_model})
 
+    def render_with_error(self):
+        return self.render('{{ meta_tags(custom) }}', context={'custom': None})
+
+
 
 class TestDjangoTemplateEngine(TemplateCase, TestCase):
     engine = engines['django']
@@ -210,3 +217,6 @@ class TestDjangoTemplateEngine(TemplateCase, TestCase):
 
     def render_with_model(self):
         return self.render('{% load wagtailmetadata_tags %}{% meta_tags custom %}', context={'custom': self.test_model})
+
+    def render_with_error(self):
+        return self.render('{% load wagtailmetadata_tags %}{% meta_tags custom %}', context={'custom': None})

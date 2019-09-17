@@ -8,7 +8,7 @@ from wagtailmetadata import tags
 def meta_tags(context, model=None):
     request = context.get('request', None)
     if not model:
-        model = context.get('self', None)
+        model = context.get('page', None)
 
     return jinja2.Markup(tags.meta_tags(request, model))
 

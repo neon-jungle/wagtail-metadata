@@ -11,4 +11,4 @@ def meta_tags(context, model=None):
     if not model:
         model = context.get('self', None)
 
-    return tags.meta_tags(request, None)
+    return tags.meta_tags(request, model)
