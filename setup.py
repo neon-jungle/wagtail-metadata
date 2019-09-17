@@ -13,9 +13,9 @@ setup(
     version='3.0.0',
     description="A tool to assist with metadata for social media.",
     long_description=readme,
-    author='Liam Brenner',
-    author_email='liam@takeflight.com.au',
-    url='https://github.com/takeflight/wagtail-metadata',
+    author='Neon Jungle',
+    author_email='developers@neonjungle.studio',
+    url='https://github.com/neon-jungle/wagtail-metadata',
 
     install_requires=[
         'wagtail~=2.0',
