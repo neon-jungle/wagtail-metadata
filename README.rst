@@ -151,6 +151,18 @@ You can specify a different object to use if you need to:
     {{ meta_tags(my_custom_object) }}
 
 
+Troubleshooting
+===============
+
+`'meta_tags' missing request from context`
+
+The template that is trying to render the `meta_tags` tag does not have a `request` object in the context. 
+
+`'meta_tags' tag is missing a model or object`
+
+There was no model passed to the template tag, or `self` is not found in the current context.
+
+
 Adding extra tags
 =================
 
