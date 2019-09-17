@@ -208,7 +208,6 @@ class TestJinja2(TemplateCase, TestCase):
         return self.render('{{ meta_tags(custom) }}', context={'custom': None})
 
 
-
 class TestDjangoTemplateEngine(TemplateCase, TestCase):
     engine = engines['django']
 

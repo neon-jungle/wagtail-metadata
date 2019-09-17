@@ -13,7 +13,7 @@ def get_meta_image_url(request, image):
 def meta_tags(request, model):
     if not request:
         raise TemplateSyntaxError(
-                "'meta_tags' missing request from context")
+            "'meta_tags' missing request from context")
     if not model:
         raise TemplateSyntaxError(
             "'meta_tags' tag is missing a model or object")
