@@ -2,7 +2,9 @@
 wagtail-metadata
 ================
 
-A tool to assist with metadata for social media and search engines.
+This plugin adds custom properties to your page models and then lets you output meta-attribute tags  using the included template tag.
+These tags help with search engine optimisations and for creating nice shareable links for social media, mainly Facebook and Twitter.
+
 
 Compatibility
 =============
@@ -147,6 +149,19 @@ You can specify a different object to use if you need to:
 .. code-block:: html
 
     {{ meta_tags(my_custom_object) }}
+
+
+Troubleshooting
+===============
+
+`'meta_tags' missing request from context`
+
+The template that is trying to render the `meta_tags` tag does not have a `request` object in the context. 
+
+`'meta_tags' tag is missing a model or object`
+
+There was no model passed to the template tag, or `self` is not found in the current context.
+
 
 Adding extra tags
 =================
