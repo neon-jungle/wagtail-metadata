@@ -1,6 +1,5 @@
 from django.template import TemplateSyntaxError
 from django.template.loader import render_to_string
-
 from wagtail.core.models import Site
 
 
