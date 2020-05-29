@@ -1,5 +1,6 @@
 from django.template import TemplateSyntaxError
 from django.template.loader import render_to_string
+from wagtail.core.models import Site
 
 
 def get_meta_image_url(request, image):
@@ -18,7 +19,7 @@ def meta_tags(request, model):
         raise TemplateSyntaxError(
             "'meta_tags' tag is missing a model or object")
     context = {
-        'site_name': request.site.site_name,
+        'site_name': Site.find_for_request(request).site_name,
         'object': model,
     }
 
