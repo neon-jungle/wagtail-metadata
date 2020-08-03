@@ -3,7 +3,7 @@
 
 from django.forms.utils import flatatt
 from django.template import TemplateSyntaxError, engines
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory, TestCase, override_settings
 from django.utils.html import format_html
 from wagtail.core.models import Site
 from wagtail.images.models import Image
@@ -193,6 +193,21 @@ class TemplateCase(object):
 
     def test_error_messages(self):
         self.assertRaises(TemplateSyntaxError, self.render_with_error)
+
+    def test_get_meta_image_url_filter(self):
+        self.fill_out_page_meta_fields()
+
+        result = get_meta_image_url(self.request, self.page.search_image)
+
+        self.assertTrue(result.endswith("original.png"))
+
+    @override_settings(WAGTAILMETADATA_IMAGE_FILTER="fill-10x20")
+    def test_get_meta_image_url_filter_with_override(self):
+        self.fill_out_page_meta_fields()
+
+        result = get_meta_image_url(self.request, self.page.search_image)
+
+        self.assertTrue(result.endswith("fill-10x20.png"))
 
 
 class TestJinja2(TemplateCase, TestCase):
