@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.template import TemplateSyntaxError
 from django.template.loader import render_to_string
 from wagtail.core.models import Site
@@ -7,7 +8,8 @@ def get_meta_image_url(request, image):
     """
     Resize an image for metadata tags, and return an absolute URL to it.
     """
-    rendition = image.get_rendition(filter='original')
+    filter = getattr(settings, "WAGTAILMETADATA_IMAGE_FILTER", "original")
+    rendition = image.get_rendition(filter=filter)
     return request.build_absolute_uri(rendition.url)
 
 
