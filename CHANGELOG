@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.0
+~~~~~
+ * Added `WAGTAILMETADATA_IMAGE_FILTER` as a way to change share image rendition
+
 3.2.0
 ~~~~~
  * Dropped site_name from being added to the title by default
