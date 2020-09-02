@@ -56,7 +56,7 @@ class TemplateCase(object):
         }), out)
         self.assertInHTML(self.meta({
             'name': 'twitter:title',
-            'content': self.page.get_meta_title() + ' — ' + self.site.site_name,
+            'content': self.page.get_meta_title(),
         }), out)
         self.assertInHTML(self.meta({
             'name': 'twitter:description', 'content': self.page.search_description,
@@ -106,7 +106,7 @@ class TemplateCase(object):
         }), out)
         self.assertInHTML(self.meta({
             'itemprop': 'name',
-            'content': self.page.get_meta_title() + ' — ' + self.site.site_name,
+            'content': self.page.get_meta_title(),
         }), out)
         self.assertInHTML(self.meta({
             'itemprop': 'description', 'content': self.page.search_description,
@@ -130,7 +130,7 @@ class TemplateCase(object):
         }), out)
         self.assertInHTML(self.meta({
             'itemprop': 'name',
-            'content': self.test_model.get_meta_title() + ' — ' + self.site.site_name,
+            'content': self.test_model.get_meta_title(),
         }), out)
         self.assertInHTML(self.meta({
             'itemprop': 'description',

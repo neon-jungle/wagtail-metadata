@@ -3,15 +3,15 @@ cache: pip
 
 matrix:
   include:
-    - env: TOXENV="py35-{dj20,dj21}-wt26"
-      python: '3.5'
-    - env: TOXENV="py36-{dj20,dj21}-wt26"
-      python: '3.6'
+    - python: "3.5"
+    - python: "3.6"
+    - python: "3.7"
+    - python: "3.8"
     - env: TOXENV="flake8,isort,docs"
-      python: '3.6'
+      python: "3.6"
 
 install:
-  - pip install --upgrade pip wheel tox
+  - pip install --upgrade pip wheel tox-travis
 
 script:
   - tox

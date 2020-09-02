@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import six
 from wagtail.core.models import Page
 
 from wagtailmetadata.models import MetadataMixin, MetadataPageMixin
@@ -10,7 +9,7 @@ class TestPageBase(type(Page)):
     pass
 
 
-class TestPage(six.with_metaclass(TestPageBase, MetadataPageMixin, Page)):
+class TestPage(MetadataPageMixin, Page, metaclass=TestPageBase):
     pass
 
 
