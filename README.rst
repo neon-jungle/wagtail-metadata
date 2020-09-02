@@ -2,6 +2,9 @@
 wagtail-metadata
 ================
 
+.. image:: https://travis-ci.org/neon-jungle/wagtail-metadata.svg?branch=master
+    :target: https://travis-ci.org/neon-jungle/wagtail-metadata
+
 This plugin adds custom properties to your page models and then lets you output meta-attribute tags  using the included template tag.
 These tags help with search engine optimisations and for creating nice shareable links for social media, mainly Facebook and Twitter.
 
