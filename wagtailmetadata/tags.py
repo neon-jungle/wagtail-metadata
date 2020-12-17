@@ -30,9 +30,7 @@ def meta_tags(request, model):
         context['meta_image_width'] = meta_image.width
         context['meta_image_height'] = meta_image.height
         meta_image = get_meta_image_url(request, meta_image)
-
     context['meta_image'] = meta_image
-
 
     return render_to_string('wagtailmetadata/parts/tags.html',
                             context, request=request)
