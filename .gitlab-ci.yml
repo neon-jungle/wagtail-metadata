@@ -4,20 +4,13 @@ stages:
 
 .python_test:
   stage: test
+  image: fkrull/multi-python
   variables:
     TOXENV: "flake8,isort,docs"
   before_script:
     - pip install --upgrade pip wheel tox
   script:
     - tox
-
-python_37:
-  extends: .python_test
-  image: python:3.7
-
-python_38:
-  extends: .python_test
-  image: python:3.8
 
 build:
     image: python:3.8
