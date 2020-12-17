@@ -2,7 +2,7 @@ stages:
   - test
   - release
 
-.python_test:
+python_test:
   stage: test
   image: fkrull/multi-python
   variables:
