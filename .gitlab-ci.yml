@@ -1,0 +1,31 @@
+stages:
+  - test
+  - release
+
+.python_test:
+  stage: test
+  variables:
+    TOXENV: "flake8,isort,docs"
+  before_script:
+    - pip install --upgrade pip wheel tox
+  script:
+    - tox
+
+python_37:
+  extends: .python_test
+  image: python:3.7
+
+python_38:
+  extends: .python_test
+  image: python:3.8
+
+build:
+    image: python:3.8
+    stage: release
+    before_script:
+        - pip install --upgrade setuptools wheel twine
+    script:
+        - ./setup.py sdist bdist_wheel
+        - twine upload dist/*
+    only:
+        - tags
