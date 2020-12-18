@@ -2,15 +2,58 @@ stages:
   - test
   - release
 
-python_test:
+
+.python_test:
   stage: test
-  image: fkrull/multi-python
-  variables:
-    TOXENV: "flake8,isort,docs"
-  before_script:
-    - pip install --upgrade pip wheel tox
   script:
-    - tox
+    - python runtests.py
+
+
+head:
+  extends: .python_test
+  image: python:3.8
+  before_script:
+    - pip install wagtail django
+  script:
+    - python runtests.py
+
+
+lts_27:
+  extends: .python_test
+  image: python:3.7
+  extends: .python_test
+  before_script:
+    - pip install wagtail~=2.7 django~=2.2
+
+
+lts_211:
+  image: python:3.8
+  extends: .python_test
+  before_script:
+    - pip install wagtail~=2.11 django~=3.1
+
+.lint:
+  stage: test
+  image: python:3.8
+  before_script:
+    - pip install -r requirements-dev.txt
+
+
+isort:
+  extends: .lint
+  script:
+    - isort --check-only --diff wagtailmetadata/ tests/
+  
+flake8:
+  extends: .lint
+  script:
+    - flake8 wagtailmetadata/ tests/
+
+docs:
+  extends: .lint
+  script:
+    - rst-lint README.rst
+
 
 build:
     image: python:3.8
