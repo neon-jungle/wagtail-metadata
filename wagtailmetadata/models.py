@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+from django.conf import settings
 
 from .utils import get_image_model_string
 
@@ -29,6 +30,9 @@ class MetadataMixin(object):
         Get the image to use for this object.
         Can be None if there is no relevant image.
         """
+        return None
+
+    def get_meta_image_url(self, request):
         return None
 
     def get_meta_twitter_card_type(self):
@@ -76,6 +80,14 @@ class MetadataPageMixin(MetadataMixin, models.Model):
 
     def get_meta_image(self):
         return self.search_image
+
+    def get_meta_image_url(self, request):
+        meta_image = self.get_meta_image()
+        if meta_image:
+            filter = getattr(settings, "WAGTAILMETADATA_IMAGE_FILTER", "original")
+            rendition = self.get_meta_image().get_rendition(filter=filter)
+            return request.build_absolute_uri(rendition.url)
+        return None
 
     class Meta:
         abstract = True
