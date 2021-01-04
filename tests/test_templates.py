@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 from django.forms.utils import flatatt
 from django.template import TemplateSyntaxError, engines
 from django.test import RequestFactory, TestCase, override_settings
@@ -10,7 +7,6 @@ from wagtail.images.models import Image
 from wagtail.images.tests.utils import get_test_image_file
 
 from tests.app.models import TestModel, TestPage
-from wagtailmetadata.tags import get_meta_image_url
 
 
 class TemplateCase(object):
@@ -63,7 +59,7 @@ class TemplateCase(object):
         }), out)
         self.assertInHTML(self.meta({
             'name': 'twitter:image',
-            'content': get_meta_image_url(self.request, self.page.search_image),
+            'content': self.page.get_meta_image_url(self.request),
         }), out)
 
     def test_twitter_no_image(self):
@@ -91,7 +87,15 @@ class TemplateCase(object):
         }), out)
         self.assertInHTML(self.meta({
             'property': 'og:image',
-            'content': get_meta_image_url(self.request, self.page.search_image),
+            'content': self.page.get_meta_image_url(self.request),
+        }), out)
+        self.assertInHTML(self.meta({
+            'property': 'og:image:width',
+            'content': self.page.get_meta_image_dimensions()[0]
+        }), out)
+        self.assertInHTML(self.meta({
+            'property': 'og:image:height',
+            'content': self.page.get_meta_image_dimensions()[1]
         }), out)
 
     def test_og_no_image(self):
@@ -113,8 +117,12 @@ class TemplateCase(object):
         }), out)
         self.assertInHTML(self.meta({
             'itemprop': 'image',
-            'content': get_meta_image_url(self.request, self.page.search_image),
+            'content': self.page.get_meta_image_url(self.request),
         }), out)
+        self.assertInHTML(
+            f'<title>{self.page.get_object_title()}</title>',
+            out
+        )
 
     def test_generic_render(self):
         out = self.render_meta()
@@ -152,7 +160,7 @@ class TemplateCase(object):
         }), out)
         self.assertInHTML(self.meta({
             'name': 'twitter:image',
-            'content': get_meta_image_url(self.request, self.page.search_image),
+            'content': self.page.get_meta_image_url(self.request),
         }), out)
 
     def test_page_og_render(self):
@@ -165,7 +173,7 @@ class TemplateCase(object):
         }), out)
         self.assertInHTML(self.meta({
             'property': 'og:image',
-            'content': get_meta_image_url(self.request, self.page.search_image),
+            'content': self.page.get_meta_image_url(self.request),
         }), out)
 
     def test_page_misc_render(self):
@@ -178,7 +186,7 @@ class TemplateCase(object):
         }), out)
         self.assertInHTML(self.meta({
             'itemprop': 'image',
-            'content': get_meta_image_url(self.request, self.page.search_image),
+            'content': self.page.get_meta_image_url(self.request),
         }), out)
 
     def test_page_generic_render(self):
@@ -197,7 +205,7 @@ class TemplateCase(object):
     def test_get_meta_image_url_filter(self):
         self.fill_out_page_meta_fields()
 
-        result = get_meta_image_url(self.request, self.page.search_image)
+        result = self.page.get_meta_image_url(self.request)
 
         self.assertTrue(result.endswith("original.png"))
 
@@ -205,9 +213,10 @@ class TemplateCase(object):
     def test_get_meta_image_url_filter_with_override(self):
         self.fill_out_page_meta_fields()
 
-        result = get_meta_image_url(self.request, self.page.search_image)
+        result = self.page.get_meta_image_url(self.request)
 
         self.assertTrue(result.endswith("fill-10x20.png"))
+        self.assertEqual((10, 20), self.page.get_meta_image_dimensions())
 
 
 class TestJinja2(TemplateCase, TestCase):

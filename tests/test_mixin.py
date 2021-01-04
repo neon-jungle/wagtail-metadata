@@ -1,5 +1,3 @@
-
-
 from django.test import TestCase
 from wagtail.core.models import Site
 from wagtail.images.models import Image
@@ -40,6 +38,7 @@ class TestMetadataPageMixin(TestCase):
             'Some test content description')
 
     def test_image(self):
+        rendition = self.image.get_rendition('original')
         self.assertEqual(
             self.page.get_meta_image(),
-            self.image)
+            rendition)

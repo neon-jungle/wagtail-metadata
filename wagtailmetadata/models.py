@@ -25,15 +25,18 @@ class MetadataMixin(object):
     def get_meta_description(self):
         raise NotImplementedError()
 
-    def get_meta_image(self):
+    def get_meta_image_url(self, request):
         """
         Get the image to use for this object.
         Can be None if there is no relevant image.
         """
         return None
 
-    def get_meta_image_url(self, request):
-        return None
+    def get_meta_image_dimensions(self):
+        """
+        Return width, height (in pixels
+        """
+        return None, None
 
     def get_meta_twitter_card_type(self):
         """
@@ -79,15 +82,23 @@ class MetadataPageMixin(MetadataMixin, models.Model):
         return self.search_description
 
     def get_meta_image(self):
-        return self.search_image
+        if self.search_image:
+            filter = getattr(settings, "WAGTAILMETADATA_IMAGE_FILTER", "original")
+            rendition = self.search_image.get_rendition(filter=filter)
+            return rendition
+        return None
 
     def get_meta_image_url(self, request):
         meta_image = self.get_meta_image()
         if meta_image:
-            filter = getattr(settings, "WAGTAILMETADATA_IMAGE_FILTER", "original")
-            rendition = self.get_meta_image().get_rendition(filter=filter)
-            return request.build_absolute_uri(rendition.url)
+            return request.build_absolute_uri(meta_image.url)
         return None
+    
+    def get_meta_image_dimensions(self):
+        meta_image = self.get_meta_image()
+        if meta_image:
+            return meta_image.width, meta_image.height
+        return None, None
 
     class Meta:
         abstract = True

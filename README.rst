@@ -70,7 +70,6 @@ You will need to implement the following methods:
     from wagtailmetadata.models import MetadataMixin
 
     class CustomObject(MetadataMixin, object):
-
         def get_meta_title(self):
             """The title of this object"""
             return "My custom object"
@@ -86,9 +85,11 @@ You will need to implement the following methods:
             """
             return "This thing is really cool, you should totally check it out"
 
-        def get_meta_image(self):
-            """A relevant Wagtail Image to show. Optional."""
-            return self.some_image
+        def get_meta_image_url(self):
+            """
+            Return a url for an image to use, see the MetadataPageMixin if using a Wagtail image
+            """
+            return 'https://neonjungle.studio/share'
 
         def get_meta_twitter_card_type(self):
             """
