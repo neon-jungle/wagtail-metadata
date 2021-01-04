@@ -99,6 +99,20 @@ You will need to implement the following methods:
             """
             return "summary_large_photo"
 
+If your custom object uses Wagtail images, you may wish to use the intermediary mixin ``wagtailmetadata.models.WagtailImageMetadataMixin``
+so you can use it for the image related metadata:
+
+.. code-block:: python
+
+    from django.db import models
+    from wagtailmetadata.models import WagtailImageMetadataMixin
+    
+    class CustomObject(WagtailImageMetadataMixin, object):
+        share_image = models.ForeignKey('wagtailimages.Image', ondelete=models.SET_NULL, null=True, related_name='+')
+
+        def get_meta_image(self):
+            return self.share_image
+
 
 Display
 =======

@@ -27,14 +27,14 @@ class MetadataMixin(object):
 
     def get_meta_image_url(self, request):
         """
-        Get the image to use for this object.
+        Get the image url to use for this object.
         Can be None if there is no relevant image.
         """
         return None
 
     def get_meta_image_dimensions(self):
         """
-        Return width, height (in pixels
+        Return width, height (in pixels)
         """
         return None, None
 
@@ -51,7 +51,35 @@ class MetadataMixin(object):
             return 'summary'
 
 
-class MetadataPageMixin(MetadataMixin, models.Model):
+class WagtailImageMetadataMixin(MetadataMixin):
+    """
+    Subclass of MetadataMixin that uses a Wagtail Image for the image-based metadata
+    """
+    def get_meta_image(self):
+        raise NotImplementedError()
+
+    def get_meta_image_rendition(self):
+        meta_image = self.get_meta_image()
+        if meta_image:
+            filter = getattr(settings, "WAGTAILMETADATA_IMAGE_FILTER", "original")
+            rendition = meta_image.get_rendition(filter=filter)
+            return rendition
+        return None
+
+    def get_meta_image_url(self, request):
+        meta_image = self.get_meta_image_rendition()
+        if meta_image:
+            return request.build_absolute_uri(meta_image.url)
+        return None
+    
+    def get_meta_image_dimensions(self):
+        meta_image = self.get_meta_image_rendition()
+        if meta_image:
+            return meta_image.width, meta_image.height
+        return None, None
+
+
+class MetadataPageMixin(WagtailImageMetadataMixin, models.Model):
     """An implementation of MetadataMixin for Wagtail pages."""
     search_image = models.ForeignKey(
         get_image_model_string(),
@@ -82,23 +110,7 @@ class MetadataPageMixin(MetadataMixin, models.Model):
         return self.search_description
 
     def get_meta_image(self):
-        if self.search_image:
-            filter = getattr(settings, "WAGTAILMETADATA_IMAGE_FILTER", "original")
-            rendition = self.search_image.get_rendition(filter=filter)
-            return rendition
-        return None
-
-    def get_meta_image_url(self, request):
-        meta_image = self.get_meta_image()
-        if meta_image:
-            return request.build_absolute_uri(meta_image.url)
-        return None
-    
-    def get_meta_image_dimensions(self):
-        meta_image = self.get_meta_image()
-        if meta_image:
-            return meta_image.width, meta_image.height
-        return None, None
+        return self.search_image
 
     class Meta:
         abstract = True

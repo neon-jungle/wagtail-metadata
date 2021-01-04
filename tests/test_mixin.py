@@ -38,7 +38,6 @@ class TestMetadataPageMixin(TestCase):
             'Some test content description')
 
     def test_image(self):
-        rendition = self.image.get_rendition('original')
         self.assertEqual(
             self.page.get_meta_image(),
-            rendition)
+            self.test_image)
