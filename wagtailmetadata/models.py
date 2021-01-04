@@ -1,8 +1,8 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
-from django.conf import settings
 
 from .utils import get_image_model_string
 
@@ -71,7 +71,7 @@ class WagtailImageMetadataMixin(MetadataMixin):
         if meta_image:
             return request.build_absolute_uri(meta_image.url)
         return None
-    
+
     def get_meta_image_dimensions(self):
         meta_image = self.get_meta_image_rendition()
         if meta_image:
