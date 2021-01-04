@@ -40,4 +40,4 @@ class TestMetadataPageMixin(TestCase):
     def test_image(self):
         self.assertEqual(
             self.page.get_meta_image(),
-            self.test_image)
+            self.image)
