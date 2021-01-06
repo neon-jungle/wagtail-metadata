@@ -23,5 +23,5 @@ class TestModel(MetadataMixin, models.Model):
     def get_meta_description(self):
         return 'Wagtail 101 - A journey through a CMS (Corrective Monkey Surgery)'
 
-    def get_meta_image(self):
+    def get_meta_image_url(self, request):
         return None

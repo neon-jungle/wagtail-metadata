@@ -38,14 +38,14 @@ class MetadataMixin(object):
         """
         return None, None
 
-    def get_meta_twitter_card_type(self):
+    def get_twitter_card_type(self, request):
         """
         Get the Twitter card type for this object.
         See https://dev.twitter.com/cards/types.
-        Defaults to 'summary_large_image' if the object has an image,
+        Defaults to 'summary' if the object has an image,
         otherwise 'summary'.
         """
-        if self.get_meta_image() is not None:
+        if self.get_meta_image_url(request) is not None:
             return 'summary_large_image'
         else:
             return 'summary'

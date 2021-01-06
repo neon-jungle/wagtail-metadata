@@ -1,6 +1,6 @@
 {% block tags %}
 {% block twitter %}
-<meta name="twitter:card" content="{{ object.get_meta_twitter_card_type }}">
+<meta name="twitter:card" content="{{ twitter_card_type }}">
 <meta name="twitter:title" content="{{ object.get_meta_title }}">
 <meta name="twitter:description" content="{{ object.get_meta_description }}">
 {% if meta_image %}<meta name="twitter:image" content="{{ meta_image }}">{% endif %}

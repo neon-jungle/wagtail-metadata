@@ -12,6 +12,7 @@ def meta_tags(request, model):
             "'meta_tags' tag is missing a model or object")
     context = {
         'site_name': Site.find_for_request(request).site_name,
+        'twitter_card_type': model.get_twitter_card_type(request),
         'object': model,
     }
 
