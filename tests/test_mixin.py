@@ -1,5 +1,3 @@
-
-
 from django.test import TestCase
 from wagtail.core.models import Site
 from wagtail.images.models import Image

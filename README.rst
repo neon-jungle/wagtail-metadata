@@ -70,7 +70,6 @@ You will need to implement the following methods:
     from wagtailmetadata.models import MetadataMixin
 
     class CustomObject(MetadataMixin, object):
-
         def get_meta_title(self):
             """The title of this object"""
             return "My custom object"
@@ -86,9 +85,11 @@ You will need to implement the following methods:
             """
             return "This thing is really cool, you should totally check it out"
 
-        def get_meta_image(self):
-            """A relevant Wagtail Image to show. Optional."""
-            return self.some_image
+        def get_meta_image_url(self):
+            """
+            Return a url for an image to use, see the MetadataPageMixin if using a Wagtail image
+            """
+            return 'https://neonjungle.studio/share.png'
 
         def get_meta_twitter_card_type(self):
             """
@@ -97,6 +98,20 @@ You will need to implement the following methods:
             or ``summary`` if there is no image. Optional.
             """
             return "summary_large_photo"
+
+If your custom object uses Wagtail images, you may wish to use the intermediary mixin ``wagtailmetadata.models.WagtailImageMetadataMixin``
+so you can use the relationship for the image related metadata:
+
+.. code-block:: python
+
+    from django.db import models
+    from wagtailmetadata.models import WagtailImageMetadataMixin
+    
+    class CustomObject(WagtailImageMetadataMixin, object):
+        share_image = models.ForeignKey('wagtailimages.Image', ondelete=models.SET_NULL, null=True, related_name='+')
+
+        def get_meta_image(self):
+            return self.share_image
 
 
 Display

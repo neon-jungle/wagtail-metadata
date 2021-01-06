@@ -1,6 +1,12 @@
 Changelog
 =========
 
+3.4.0
+~~~~~
+
+ * Added overwritable `get_meta_image_url` method for non-wagtail meta images
+ * Split out Wagtail image related methods into own mixin `WagtailImageMetadataMixin`
+
 3.3.1
 ~~~~~
  * Added width and height to share image attributes

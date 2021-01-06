@@ -1,8 +1,8 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
-from django.conf import settings
 
 from .utils import get_image_model_string
 
@@ -25,30 +25,61 @@ class MetadataMixin(object):
     def get_meta_description(self):
         raise NotImplementedError()
 
-    def get_meta_image(self):
+    def get_meta_image_url(self, request):
         """
-        Get the image to use for this object.
+        Get the image url to use for this object.
         Can be None if there is no relevant image.
         """
         return None
 
-    def get_meta_image_url(self, request):
-        return None
+    def get_meta_image_dimensions(self):
+        """
+        Return width, height (in pixels)
+        """
+        return None, None
 
-    def get_meta_twitter_card_type(self):
+    def get_twitter_card_type(self, request):
         """
         Get the Twitter card type for this object.
         See https://dev.twitter.com/cards/types.
-        Defaults to 'summary_large_image' if the object has an image,
+        Defaults to 'summary' if the object has an image,
         otherwise 'summary'.
         """
-        if self.get_meta_image() is not None:
+        if self.get_meta_image_url(request) is not None:
             return 'summary_large_image'
         else:
             return 'summary'
 
 
-class MetadataPageMixin(MetadataMixin, models.Model):
+class WagtailImageMetadataMixin(MetadataMixin):
+    """
+    Subclass of MetadataMixin that uses a Wagtail Image for the image-based metadata
+    """
+    def get_meta_image(self):
+        raise NotImplementedError()
+
+    def get_meta_image_rendition(self):
+        meta_image = self.get_meta_image()
+        if meta_image:
+            filter = getattr(settings, "WAGTAILMETADATA_IMAGE_FILTER", "original")
+            rendition = meta_image.get_rendition(filter=filter)
+            return rendition
+        return None
+
+    def get_meta_image_url(self, request):
+        meta_image = self.get_meta_image_rendition()
+        if meta_image:
+            return request.build_absolute_uri(meta_image.url)
+        return None
+
+    def get_meta_image_dimensions(self):
+        meta_image = self.get_meta_image_rendition()
+        if meta_image:
+            return meta_image.width, meta_image.height
+        return None, None
+
+
+class MetadataPageMixin(WagtailImageMetadataMixin, models.Model):
     """An implementation of MetadataMixin for Wagtail pages."""
     search_image = models.ForeignKey(
         get_image_model_string(),
@@ -80,14 +111,6 @@ class MetadataPageMixin(MetadataMixin, models.Model):
 
     def get_meta_image(self):
         return self.search_image
-
-    def get_meta_image_url(self, request):
-        meta_image = self.get_meta_image()
-        if meta_image:
-            filter = getattr(settings, "WAGTAILMETADATA_IMAGE_FILTER", "original")
-            rendition = self.get_meta_image().get_rendition(filter=filter)
-            return request.build_absolute_uri(rendition.url)
-        return None
 
     class Meta:
         abstract = True
