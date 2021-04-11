@@ -85,7 +85,7 @@ You will need to implement the following methods:
             """
             return "This thing is really cool, you should totally check it out"
 
-        def get_meta_image_url(self):
+        def get_meta_image_url(self, request):
             """
             Return a url for an image to use, see the MetadataPageMixin if using a Wagtail image
             """
