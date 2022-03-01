@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 
@@ -87,7 +87,7 @@ class MetadataPageMixin(WagtailImageMetadataMixin, models.Model):
         blank=True,
         related_name='+',
         on_delete=models.SET_NULL,
-        verbose_name=ugettext_lazy('Search image')
+        verbose_name=gettext_lazy('Search image')
     )
 
     promote_panels = [
@@ -97,7 +97,7 @@ class MetadataPageMixin(WagtailImageMetadataMixin, models.Model):
             FieldPanel('show_in_menus'),
             FieldPanel('search_description'),
             ImageChooserPanel('search_image'),
-        ], ugettext_lazy('Common page configuration')),
+        ], gettext_lazy('Common page configuration')),
     ]
 
     def get_meta_url(self):
