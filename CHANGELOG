@@ -1,6 +1,12 @@
 Changelog
 =========
 
+3.5.0
+~~~~~
+
+ * Django 4 compatibility (ugettext_lazy)
+
+
 3.4.1
 ~~~~~
 
