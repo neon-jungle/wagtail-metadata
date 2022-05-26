@@ -2,7 +2,7 @@ from django.template import TemplateSyntaxError
 from django.template.loader import render_to_string
 try:
     from wagtail.models import Site
- except ImportError:
+except ImportError:
     from wagtail.core.models import Site
 
 
