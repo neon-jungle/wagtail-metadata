@@ -18,7 +18,7 @@ setup(
     url='https://github.com/neon-jungle/wagtail-metadata',
 
     install_requires=[
-        'wagtail~=2.0',
+        'wagtail~=3.0',
     ],
     zip_safe=False,
     license='BSD License',
