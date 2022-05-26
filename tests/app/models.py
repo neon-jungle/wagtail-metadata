@@ -1,5 +1,8 @@
 from django.db import models
-from wagtail.core.models import Page
+try:
+    from wagtail.models import Page
+except ImportError:
+    from wagtail.core.models import Page
 
 from wagtailmetadata.models import MetadataMixin, MetadataPageMixin
 

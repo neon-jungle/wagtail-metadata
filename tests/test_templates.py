@@ -2,7 +2,10 @@ from django.forms.utils import flatatt
 from django.template import TemplateSyntaxError, engines
 from django.test import RequestFactory, TestCase, override_settings
 from django.utils.html import format_html
-from wagtail.core.models import Site
+try:
+    from wagtail.models import Site
+except ImportError:
+    from wagtail.core.models import Site
 from wagtail.images.models import Image
 from wagtail.images.tests.utils import get_test_image_file
 

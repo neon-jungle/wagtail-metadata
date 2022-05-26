@@ -1,7 +1,10 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy
-from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+try:
+    from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+except ImportError:
+    from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 from .utils import get_image_model_string
