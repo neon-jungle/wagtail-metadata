@@ -1,9 +1,6 @@
 from django.template import TemplateSyntaxError
 from django.template.loader import render_to_string
-try:
-    from wagtail.models import Site
-except ImportError:
-    from wagtail.core.models import Site
+from wagtail.models import Site
 
 
 def meta_tags(request, model):

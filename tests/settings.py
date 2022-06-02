@@ -1,11 +1,8 @@
 import os
-from wagtail import VERSION as WAGTAIL_VERSION
 
 DEBUG = True
 
 SECRET_KEY = 'not a secret'
-
-WAGTAIL_CORE = "wagtail" if WAGTAIL_VERSION >= (3, 0) else "wagtail.core"
 
 INSTALLED_APPS = [
     # Local apps
@@ -24,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
 
     # Wagtail apps
-    WAGTAIL_CORE,
+    'wagtail',
     'wagtail.admin',
     'wagtail.documents',
     'wagtail.users',
@@ -55,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    f'{WAGTAIL_CORE}.middleware.SiteMiddleware',
+    'wagtail.middleware.SiteMiddleware',
 ]
 
 TEMPLATES = [
@@ -81,7 +78,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'extensions': [
-                f'{WAGTAIL_CORE}.jinja2tags.core',
+                'wagtail.jinja2tags.core',
                 'wagtail.images.jinja2tags.images',
                 'wagtailmetadata.jinja2tags.WagtailMetadataExtension'
             ],
