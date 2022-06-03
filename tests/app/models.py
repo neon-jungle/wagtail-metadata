@@ -1,5 +1,5 @@
 from django.db import models
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from wagtailmetadata.models import MetadataMixin, MetadataPageMixin
 
