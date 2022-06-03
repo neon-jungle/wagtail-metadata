@@ -1,16 +1,17 @@
 import jinja2
 from jinja2.ext import Extension
+import markupsafe
 
 from wagtailmetadata import tags
 
 
-@jinja2.contextfunction
+@jinja2.pass_context
 def meta_tags(context, model=None):
     request = context.get('request', None)
     if not model:
         model = context.get('page', None)
 
-    return jinja2.Markup(tags.meta_tags(request, model))
+    return markupsafe.Markup(tags.meta_tags(request, model))
 
 
 class WagtailMetadataExtension(Extension):
