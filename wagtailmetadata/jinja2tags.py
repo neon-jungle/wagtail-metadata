@@ -1,6 +1,6 @@
 import jinja2
-from jinja2.ext import Extension
 import markupsafe
+from jinja2.ext import Extension
 
 from wagtailmetadata import tags
 
