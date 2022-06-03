@@ -1,7 +1,7 @@
 from django.test import TestCase
-from wagtail.models import Site
 from wagtail.images.models import Image
 from wagtail.images.tests.utils import get_test_image_file
+from wagtail.models import Site
 
 from tests.app.models import TestPage
 

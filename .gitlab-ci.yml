@@ -11,26 +11,20 @@ stages:
 
 head:
   extends: .python_test
-  image: python:3.8
+  image: python:3.9
   before_script:
     - pip install wagtail django -r requirements-dev.txt
   script:
     - python runtests.py
 
 
-lts_27:
+wt_3:
   extends: .python_test
-  image: python:3.7
-  extends: .python_test
-  before_script:
-    - pip install wagtail~=2.7 django~=2.2 -r requirements-dev.txt
-
-
-lts_211:
-  image: python:3.8
+  image: python:3.10
   extends: .python_test
   before_script:
-    - pip install wagtail~=2.11 django~=3.1 -r requirements-dev.txt
+    - pip install wagtail~=3.0.0 django~=4.0.0 -r requirements-dev.txt
+
 
 .lint:
   stage: test
