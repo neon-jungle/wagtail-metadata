@@ -1,6 +1,12 @@
 Changelog
 =========
 
+4.0.1
+~~~~~
+
+* Loosen wagtail req to be 3+
+
+
 4.0.0
 ~~~~~
 

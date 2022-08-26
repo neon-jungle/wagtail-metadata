@@ -28,7 +28,7 @@ wt_3:
 
 .lint:
   stage: test
-  image: python:3.8
+  image: python:3.10
   before_script:
     - pip install -r requirements-dev.txt
 
@@ -50,7 +50,7 @@ docs:
 
 
 build:
-    image: python:3.8
+    image: python:3.10
     stage: release
     before_script:
         - pip install --upgrade setuptools wheel twine
