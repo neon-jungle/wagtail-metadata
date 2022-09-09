@@ -2,7 +2,6 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
 
 from .utils import get_image_model_string
 
@@ -96,7 +95,7 @@ class MetadataPageMixin(WagtailImageMetadataMixin, models.Model):
             FieldPanel('seo_title'),
             FieldPanel('show_in_menus'),
             FieldPanel('search_description'),
-            ImageChooserPanel('search_image'),
+            FieldPanel('search_image'),
         ], gettext_lazy('Common page configuration')),
     ]
 

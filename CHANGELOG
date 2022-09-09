@@ -1,6 +1,12 @@
 Changelog
 =========
 
+4.0.2
+~~~~~
+
+* Replace deprecated ImageChooserPanel with FieldPanel
+
+
 4.0.1
 ~~~~~
 
