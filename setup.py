@@ -10,7 +10,7 @@ with open('README.rst', 'r') as f:
 
 setup(
     name='wagtail-metadata',
-    version='4.0.1',
+    version='4.0.2',
     description="A tool to assist with metadata for social media.",
     long_description=readme,
     author='Neon Jungle',
