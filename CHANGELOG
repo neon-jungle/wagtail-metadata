@@ -1,6 +1,65 @@
 Changelog
 =========
 
+4.0.2
+~~~~~
+
+* Replace deprecated ImageChooserPanel with FieldPanel
+
+
+4.0.1
+~~~~~
+
+* Loosen wagtail req to be 3+
+
+
+4.0.0
+~~~~~
+
+ * Add Wagtail 3.0 support
+ * Drop support for wagtail 2.0
+
+3.5.0
+~~~~~
+
+ * Django 4 compatibility (ugettext_lazy)
+
+
+3.4.1
+~~~~~
+
+ * Fixed the included template to have consistent quotation marks
+
+3.4.0
+~~~~~
+
+ * Added overwritable `get_meta_image_url` method for non-wagtail meta images
+ * Split out Wagtail image related methods into own mixin `WagtailImageMetadataMixin`
+
+3.3.1
+~~~~~
+ * Added width and height to share image attributes
+ * Switched from travis to gitlab-ci
+
+3.3.0
+~~~~~
+ * Added `WAGTAILMETADATA_IMAGE_FILTER` as a way to change share image rendition
+
+3.2.0
+~~~~~
+ * Dropped site_name from being added to the title by default
+
+3.0.0
+~~~~~
+ * Added title tag
+ * Added error messages for missing bits of template tag
+
+2.0.0
+~~~~~
+ * Dropped python2
+ * Updated wagtail dependency to 2.0
+
+
 0.2.0
 ~~~~~
  * Feature: Added support for custom images

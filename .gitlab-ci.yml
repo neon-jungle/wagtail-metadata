@@ -1,0 +1,61 @@
+stages:
+  - test
+  - release
+
+
+.python_test:
+  stage: test
+  script:
+    - python runtests.py
+
+
+head:
+  extends: .python_test
+  image: python:3.9
+  before_script:
+    - pip install wagtail django -r requirements-dev.txt
+  script:
+    - python runtests.py
+
+
+wt_3:
+  extends: .python_test
+  image: python:3.10
+  extends: .python_test
+  before_script:
+    - pip install wagtail~=3.0.0 django~=4.0.0 -r requirements-dev.txt
+
+
+.lint:
+  stage: test
+  image: python:3.10
+  before_script:
+    - pip install -r requirements-dev.txt
+
+
+isort:
+  extends: .lint
+  script:
+    - isort --check-only --diff wagtailmetadata/ tests/
+  
+flake8:
+  extends: .lint
+  script:
+    - flake8 wagtailmetadata/ tests/
+
+docs:
+  extends: .lint
+  script:
+    - rst-lint README.rst
+
+
+build:
+    image: python:3.10
+    stage: release
+    before_script:
+        - pip install --upgrade setuptools wheel twine
+    script:
+        - ./setup.py sdist bdist_wheel
+        - twine upload dist/*
+    only:
+        - tags

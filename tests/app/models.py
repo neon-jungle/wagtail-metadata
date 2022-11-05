@@ -1,9 +1,15 @@
 from django.db import models
-from wagtail.wagtailcore.models import Page
+from wagtail.models import Page
+
 from wagtailmetadata.models import MetadataMixin, MetadataPageMixin
 
 
-class TestPage(MetadataPageMixin, Page):
+class TestPageBase(type(Page)):
+    """See https://code.djangoproject.com/ticket/27337"""
+    pass
+
+
+class TestPage(MetadataPageMixin, Page, metaclass=TestPageBase):
     pass
 
 
@@ -17,5 +23,5 @@ class TestModel(MetadataMixin, models.Model):
     def get_meta_description(self):
         return 'Wagtail 101 - A journey through a CMS (Corrective Monkey Surgery)'
 
-    def get_meta_image(self):
+    def get_meta_image_url(self, request):
         return None
