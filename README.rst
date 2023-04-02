@@ -232,3 +232,15 @@ you can override or extend:
 
 ``{% block meta %}``
     This block surrounds the standard meta tags defined in HTML.
+
+
+Customising the share image rendition
+=====================================
+
+By default, the share image rendition is set to ``original`` and will use the full size image.
+
+If you wish to use a different rendition, you can set the ``WAGTAILMETADATA_IMAGE_FILTER`` setting to change the filter used. e.g.
+
+.. code-block:: python
+
+    WAGTAILMETADATA_IMAGE_FILTER = 'fill-1200x630'
