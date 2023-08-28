@@ -90,8 +90,8 @@ class MetadataPageMixin(WagtailImageMetadataMixin, models.Model):
     )
 
     promote_panels = [
-        MultiFieldPanel([
-            FieldPanel('slug'),
+       MultiFieldPanel([
+            FieldPanel("slug", widget=SlugInput),
             FieldPanel('seo_title'),
             FieldPanel('show_in_menus'),
             FieldPanel('search_description'),
