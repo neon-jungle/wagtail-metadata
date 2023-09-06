@@ -46,15 +46,16 @@ class MetadataMixin(object):
         otherwise 'summary'.
         """
         if self.get_meta_image_url(request) is not None:
-            return 'summary_large_image'
+            return "summary_large_image"
         else:
-            return 'summary'
+            return "summary"
 
 
 class WagtailImageMetadataMixin(MetadataMixin):
     """
     Subclass of MetadataMixin that uses a Wagtail Image for the image-based metadata
     """
+
     def get_meta_image(self):
         raise NotImplementedError()
 
@@ -81,23 +82,27 @@ class WagtailImageMetadataMixin(MetadataMixin):
 
 class MetadataPageMixin(WagtailImageMetadataMixin, models.Model):
     """An implementation of MetadataMixin for Wagtail pages."""
+
     search_image = models.ForeignKey(
         get_image_model_string(),
         null=True,
         blank=True,
-        related_name='+',
+        related_name="+",
         on_delete=models.SET_NULL,
-        verbose_name=gettext_lazy('Search image')
+        verbose_name=gettext_lazy("Search image"),
     )
 
     promote_panels = [
-       MultiFieldPanel([
-            FieldPanel("slug", widget=SlugInput),
-            FieldPanel('seo_title'),
-            FieldPanel('show_in_menus'),
-            FieldPanel('search_description'),
-            FieldPanel('search_image'),
-        ], gettext_lazy('Common page configuration')),
+        MultiFieldPanel(
+            [
+                FieldPanel("slug", widget=SlugInput),
+                FieldPanel("seo_title"),
+                FieldPanel("show_in_menus"),
+                FieldPanel("search_description"),
+                FieldPanel("search_image"),
+            ],
+            gettext_lazy("Common page configuration"),
+        ),
     ]
 
     def get_meta_url(self):
