@@ -12,7 +12,8 @@ These tags help with search engine optimisations and for creating nice shareable
 Compatibility
 =============
 
-Wagtail-metadata works with Wagtail v2.0 and upwards.
+Wagtail-metadata works with Wagtail v5.0 and upwards.
+For compatibility with older versions of Wagtail, see past releases. 
 
 Installing
 ==========
